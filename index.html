@@ -1,0 +1,672 @@
+<!-- -----------------------------------------------
+Leerlauf
+(c) 2024 Marco Fenner
+
+Urheberrechtlich geschützt.
+Kopieren erlaubt.
+Verändern nur mit Namensnennung des Autors ;-)
+Danke und Viel Spaß!
+------------------------------------------------ -->
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leerlauf v1.02</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="leerfavicon.ico" type="image/x-icon">
+    
+    <!-- Meta-Tags für SEO -->
+    <meta name="description" content="Leerlauf ist ein unterhaltsames Idle-Browsergame, entwickelt von Marco Fenner. Erhöhe die Zahl, sammle Aufstiegs-Sterne und verbessere deine Fähigkeiten!">
+    <meta name="keywords" content="Idle Game, Browsergame, Leerlauf, Aufstieg, Zahlen erhöhen, HTML5 Spiel, Marco Fenner, Fennertech, Leerlauf-Spiel">
+    <meta name="author" content="Marco Fenner">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="Leerlauf - Das Idle-Browsergame">
+    <meta property="og:description" content="Spiele Leerlauf, das Idle-Browsergame von Marco Fenner. Erhöhe die Zahl, sammle Sterne und meistere das Spiel!">
+    <meta property="og:url" content="https://fennertech.github.io/leerlauf/">
+    <meta property="og:image" content="leerfavicon.ico">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Leerlauf - Das Idle-Browsergame">
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="Leerlauf - Das Idle-Browsergame">
+    <meta property="twitter:description" content="Spiele Leerlauf, das Idle-Browsergame von Marco Fenner. Erhöhe die Zahl, sammle Sterne und meistere das Spiel!">
+    <meta property="twitter:url" content="https://fennertech.github.io/leerlauf/">
+    <meta property="twitter:image" content="leerfavicon.ico">
+
+    <style>
+        body {
+            background-color: #333;
+            color: #ccc;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            position: relative;
+        }
+        h1 {
+            font-size: 34px;
+            margin-top: 40px;
+            color: #00FF00;
+        }
+        h2 {
+            font-size: 20px;
+            margin-bottom: 60px;
+        }
+        a {
+            color: #fff;
+            text-decoration: underline;
+        }
+        #prestigeStars {
+            font-size: 70pt;
+            margin-bottom: 40px;
+            color: #00BFFF;
+            display: none;
+        }
+        #prestigeMessage {
+            font-size: 34px;
+            margin-bottom: 40px;
+            color: #ccc;
+            display: none;
+        }
+        #mainNumber {
+            font-size: 70pt;
+            color: yellow;
+            margin: 40px auto 20px;
+        }
+        #mainNumber span {
+            font-size: 30pt;
+            color: white;
+        }
+        button {
+            font-size: 1.2em;
+            margin: 20px 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #666;
+            color: #fff;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        button:hover {
+            background-color: #777;
+            color: #fff;
+        }
+        button:disabled {
+            background-color: #555;
+            color: #888;
+            cursor: not-allowed;
+        }
+        #resetButton {
+            background-color: #ff0000;
+            color: #fff;
+            margin-right: 5px;
+        }
+        #impressumButton {
+            margin-right: 5px;
+        }
+        #clickButton {
+            background-color: #28a745;
+            color: #fff;
+            font-weight: bold;
+        }
+        #clickButton:hover {
+            background-color: #218838;
+        }
+        #progressContainer {
+            width: 53.33%;
+            margin: 40px auto 30px;
+        }
+        #progressBar, #prestigeProgressBar {
+            width: 100%;
+            height: 30px;
+            background-color: #555;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+        #progress, #prestigeProgress {
+            height: 100%;
+            background-color: #ccc;
+            width: 0;
+        }
+        #timer {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+        #modal, #achievementModal, #impressumModal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #444;
+            padding: 20px;
+            border-radius: 10px;
+            z-index: 1000;
+            text-align: center;
+            max-width: 90%;
+            max-height: 90%;
+            overflow-y: auto;
+        }
+        #impressumModal {
+            text-align: left;
+        }
+        #impressumModal .closeButton {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #ff0000;
+            color: #fff;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            border: none;
+            font-size: 1.2em;
+        }
+        #achievementModal h3 {
+            margin-bottom: 20px;
+            color: #FFD700;
+            font-size: 1.5em;
+        }
+        #modal h3 {
+            margin-bottom: 20px;
+        }
+        #modal button, #achievementModal button {
+            margin: 5px;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            border-radius: 5px;
+            background-color: #555;
+            color: #fff;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+        #modal button:hover, #achievementModal button:hover {
+            background-color: #666;
+        }
+        #overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+        #upgradeButton:disabled, #prestigeButton:disabled {
+            background-color: #555;
+            cursor: not-allowed;
+        }
+        #prestigePercent {
+            font-size: 1.2em;
+            color: #fff;
+            margin-top: 10px;
+        }
+        table {
+            width: 30%;
+            margin: 40px auto;
+            color: #fff;
+            font-size: 1em;
+        }
+        td {
+            padding: 5px;
+            text-align: left;
+        }
+        td:first-child {
+            text-align: right;
+            padding-right: 10px;
+        }
+        td:last-child {
+            text-align: left;
+        }
+        #cookieBanner {
+            position: fixed;
+            bottom: -200px;
+            left: 0;
+            width: 100%;
+            background-color: #444;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            z-index: 1001;
+            transition: bottom 0.5s ease;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.3);
+        }
+        #cookieBanner.show {
+            bottom: 0;
+        }
+        #cookieBanner button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 1em;
+            border-radius: 5px;
+            background-color: #555;
+            color: #fff;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+        #cookieBanner button:hover {
+            background-color: #666;
+        }
+    </style>
+</head>
+<body>
+    <script language="JavaScript" src="https://www.besucherzaehler-kostenlos.de/js/counter.js.php?count=1&id=hTBfSGOqXL&start=0&design=6"></script>
+    
+    <h1>Leerlauf v1.02</h1>
+    <h2>Das neue Browsergame vom <a href="mailto:datenschrauber@posteo.de">Datenschrauber!</a></h2>
+    <div id="prestigeMessage">Die Macht des Nichts-Tuns. Erlebe sie jetzt! 😉</div>
+    <div id="prestigeStars"></div>
+    <div id="mainNumber">0<span>,000</span></div>
+    <button id="impressumButton">Impressum</button>
+    <button id="resetButton">Null</button>
+    <button id="increaseSizeButton">+</button>
+    <button id="decreaseSizeButton">-</button>
+    <button id="prestigeButton" disabled>Aufstieg</button>
+    <button id="upgradeButton">Upgrade (Preis: 2)</button>
+    <button id="clickButton">Klick!</button>
+
+    <div id="progressContainer">
+        <div id="progressBar">
+            <div id="progress"></div>
+        </div>
+        <div id="timer">5:00</div>
+        <div id="prestigeProgressBar">
+            <div id="prestigeProgress"></div>
+        </div>
+        <div id="prestigePercent">0%</div>
+    </div>
+
+    <table>
+        <tr><td>Online:</td><td><span class="BZonline"></span></td></tr>
+        <tr><td>Heute:</td><td><span class="BZheute"></span></td></tr>
+        <tr><td>Gestern:</td><td><span class="BZgestern"></span></td></tr>
+        <tr><td>Gesamt:</td><td><span class="BZgesamt"></span></td></tr>
+        <tr><td>Seit:</td><td><span class="BZseit"></span></td></tr>
+    </table>
+
+    <div id="overlay"></div>
+
+    <div id="modal">
+        <h3>Möchten Sie den Spielstand wirklich zurücksetzen?</h3>
+        <button id="confirmReset">Ja</button>
+        <button id="cancelReset">Nein</button>
+    </div>
+
+    <div id="achievementModal">
+        <h3>Glückwunsch zum Aufstieg!</h3>
+        <p>Du hast deinen <span id="prestigeLevelDisplay"></span>. Aufstieg-Stern erhalten.</p>
+        <p>Arbeite jetzt auf deinen nächsten Aufstieg hin!</p>
+        <button id="closeAchievementModal">Ok</button>
+    </div>
+
+    <div id="impressumModal">
+        <button class="closeButton" id="closeImpressumModal">X</button>
+        <h2>Impressum</h2>
+        <p><strong>Angaben gemäß § 5 TMG</strong></p>
+        <p><strong>Betreiber der Website:</strong><br>
+            Marco Fenner<br>
+            Wiardastraße 19<br>
+            26603 Aurich<br>
+            Deutschland</p>
+        <p><strong>Kontakt:</strong><br>
+            E-Mail: <a href="mailto:datenschrauber@posteo.de">datenschrauber@posteo.de</a><br>
+            Telefon: +49 1573 004 2105</p>
+        <p><strong>Vielen Dank für den Besuch meiner Website.<br>Wenn Sie Ihnen gefallen hat, würde ich mich über
+                eine kurze Nachricht sehr freuen.</strong> 😊</p>
+
+        <h3>Haftungsausschluss:</h3>
+        <p><strong>Haftung für Inhalte</strong><br>
+            Als Diensteanbieter bin ich gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den
+            allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG bin ich als Diensteanbieter jedoch nicht
+            verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen
+            zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen. Verpflichtungen zur Entfernung oder
+            Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben hiervon unberührt. Eine
+            diesbezügliche Haftung ist jedoch erst ab dem Zeitpunkt der Kenntnis einer konkreten
+            Rechtsverletzung möglich. Bei Bekanntwerden von entsprechenden Rechtsverletzungen werde ich diese
+            Inhalte umgehend entfernen.</p>
+
+        <p><strong>Haftung für Links</strong><br>
+            Mein Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte ich keinen Einfluss habe.
+            Deshalb kann ich für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der
+            verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Die
+            verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft.
+            Rechtswidrige Inhalte waren zum Zeitpunkt der Verlinkung nicht erkennbar. Eine permanente
+            inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte einer
+            Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von Rechtsverletzungen werde ich derartige Links
+            umgehend entfernen.</p>
+
+        <p><strong>Urheberrecht</strong><br>
+            Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem
+            deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung
+            außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors
+            bzw. Erstellers. Downloads und Kopien dieser Seite sind nur für den privaten, nicht kommerziellen
+            Gebrauch gestattet. Soweit die Inhalte auf dieser Seite nicht vom Betreiber erstellt wurden, werden
+            die Urheberrechte Dritter beachtet. Insbesondere werden Inhalte Dritter als solche gekennzeichnet.
+            Sollten Sie trotzdem auf eine Urheberrechtsverletzung aufmerksam werden, bitte ich um einen
+            entsprechenden Hinweis. Bei Bekanntwerden von Rechtsverletzungen werde ich derartige Inhalte
+            umgehend entfernen.</p>
+
+        <h3>Datenschutz:</h3>
+        <p>Die Nutzung meiner Webseite ist in der Regel ohne Angabe personenbezogener Daten möglich. Soweit auf
+            meinen Seiten personenbezogene Daten (beispielsweise Name, Anschrift oder E-Mail-Adressen) erhoben
+            werden, erfolgt dies, soweit möglich, stets auf freiwilliger Basis. Diese Daten werden ohne Ihre
+            ausdrückliche Zustimmung nicht an Dritte weitergegeben. Ich weise darauf hin, dass die
+            Datenübertragung im Internet (z.B. bei der Kommunikation per E-Mail) Sicherheitslücken aufweisen
+            kann. Ein lückenloser Schutz der Daten vor dem Zugriff durch Dritte ist nicht möglich.</p>
+
+        <h3>Besucherzähler von besucherzaehler-kostenlos.de</h3>
+
+        <p>Diese Webseite verwendet einen externen Zähler, um die Anzahl der Webseitenaufrufe zu erfassen. Dafür wird ein Java-Script von einer externe Webseite geladen. Der Server von <a href="https://www.besucherzaehler-kostenlos.de">besucherzaehler-kostenlos.de</a> speichert die IP-Adresse des Zugriffs anonymisiert und zeitlich begrenzt in einer LOG-Datei ab. Diese wird regelmäßig unwiderruflich gelöscht.</p>
+
+        <p>Um die korrekte Funktionsweise des Zählers zu gewährleisten, speichert der Besucherzähler zudem einen sogenannten Session-Cookie auf dem Computer des Besuchers ab. Dieser wird in der Regel vom Browser gelöscht, sobald er geschlossen wird. In diesem Cookie werden keine persönlichen Informationen gespeichert. Er enthält lediglich die Information der aufgerufenen Domain, sowie einen boolschen Tag (true/false), um den Besucher als bereits gezählt zu markieren.</p>
+
+        <p>Es werden auch darüberhinaus keine persönlichen oder personenbezogenen Daten vom Besucherzähler erhoben. Eine Nachverfolgung oder Zuordnung der Zugriffe ist zu keiner Zeit möglich. Ein besonderer Dank geht an <a href="https://www.howtodocentral.com">www.howtodocentral.com</a>, durch dessen Unterstützung dieser kostenlose Service erst möglich gemacht wird.</p>
+
+        <h3>Einsehbarkeit des Quellcodes:</h3>
+        <p>Der Quellcode dieser Seite ist vollständig für jedermann einsehbar.</p>
+    </div>
+
+    <div id="cookieBanner">
+        <p>Diese Website verwendet Cookies, um Ihnen das bestmögliche Erlebnis zu bieten. Indem Sie auf "Annehmen" klicken, stimmen Sie der Verwendung von Cookies zu.</p>
+        <button id="acceptCookies">Annehmen</button>
+        <button id="declineCookies">Ablehnen</button>
+    </div>
+
+    <script>
+        function showCookieBanner() {
+            const cookieBanner = document.getElementById('cookieBanner');
+            cookieBanner.classList.add('show');
+        }
+
+        function hideCookieBanner() {
+            const cookieBanner = document.getElementById('cookieBanner');
+            cookieBanner.classList.remove('show');
+        }
+
+        function checkCookiesConsent() {
+            const cookieConsent = localStorage.getItem('cookieConsent');
+            if (!cookieConsent) {
+                showCookieBanner();
+            } else if (cookieConsent === 'declined') {
+                document.body.innerHTML = '<h1>Der Zugriff auf diese Website wurde verweigert</h1><p>Sie haben die Verwendung von Cookies abgelehnt. Deshalb können Sie diese Website nicht nutzen.</p>';
+            }
+        }
+
+        document.getElementById('acceptCookies').addEventListener('click', function() {
+            localStorage.setItem('cookieConsent', 'accepted');
+            hideCookieBanner();
+        });
+
+        document.getElementById('declineCookies').addEventListener('click', function() {
+            localStorage.setItem('cookieConsent', 'declined');
+            document.body.innerHTML = '<h1>Der Zugriff auf diese Website wurde verweigert</h1><p>Sie haben die Verwendung von Cookies abgelehnt. Deshalb können Sie diese Website nicht nutzen.</p>';
+        });
+
+        checkCookiesConsent();
+
+        let mainNumber = parseInt(localStorage.getItem('mainNumber')) || 0;
+        let subNumber = parseInt(localStorage.getItem('subNumber')) || 0;
+        let clickValue = parseFloat(localStorage.getItem('clickValue')) || 0.001;
+        let upgradeCost = parseInt(localStorage.getItem('upgradeCost')) || 2;
+        let prestigeLevel = parseInt(localStorage.getItem('prestigeLevel')) || 0;
+        let prestigeThreshold = parseInt(localStorage.getItem('prestigeThreshold')) || 25000;
+        const progressBar = document.getElementById('progress');
+        const prestigeProgressBar = document.getElementById('prestigeProgress');
+        const timerElement = document.getElementById('timer');
+        const prestigePercentElement = document.getElementById('prestigePercent');
+        const progressTime = 5 * 60 * 1000;
+        let progressStartTime = parseInt(localStorage.getItem('progressStartTime')) || Date.now();
+
+        const progressBarColors = [
+            '#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#FF00FF', '#00FFFF',
+            '#000000', '#FFFFFF', '#800000', '#008000', '#000080', '#808000',
+            '#800080', '#008080', '#C0C0C0', '#808080', '#CCC'
+        ];
+        let currentColorIndex = 0;
+
+        function adjustFontSize(delta) {
+            const mainNumberElement = document.getElementById('mainNumber');
+            const spanElement = mainNumberElement.querySelector('span');
+
+            let mainFontSize = parseFloat(mainNumberElement.style.fontSize) || 70;
+            let spanFontSize = parseFloat(spanElement.style.fontSize) || 30;
+
+            mainFontSize += delta;
+            spanFontSize += delta;
+
+            mainNumberElement.style.fontSize = mainFontSize + 'pt';
+            spanElement.style.fontSize = spanFontSize + 'pt';
+
+            document.getElementById('prestigeStars').style.fontSize = mainFontSize + 'pt';
+        }
+
+        document.getElementById('increaseSizeButton').addEventListener('click', function() {
+            adjustFontSize(2);
+        });
+
+        document.getElementById('decreaseSizeButton').addEventListener('click', function() {
+            adjustFontSize(-2);
+        });
+
+        function saveProgress() {
+            localStorage.setItem('mainNumber', mainNumber);
+            localStorage.setItem('subNumber', subNumber);
+            localStorage.setItem('clickValue', clickValue);
+            localStorage.setItem('upgradeCost', upgradeCost);
+            localStorage.setItem('prestigeLevel', prestigeLevel);
+            localStorage.setItem('prestigeThreshold', prestigeThreshold);
+            localStorage.setItem('progressStartTime', progressStartTime);
+            localStorage.setItem('lastSaveTime', Date.now());
+        }
+
+        function loadProgress() {
+            mainNumber = parseInt(localStorage.getItem('mainNumber')) || 0;
+            subNumber = parseInt(localStorage.getItem('subNumber')) || 0;
+            clickValue = parseFloat(localStorage.getItem('clickValue')) || 0.001;
+            upgradeCost = parseInt(localStorage.getItem('upgradeCost')) || 2;
+            prestigeLevel = parseInt(localStorage.getItem('prestigeLevel')) || 0;
+            prestigeThreshold = parseInt(localStorage.getItem('prestigeThreshold')) || 25000;
+            progressStartTime = parseInt(localStorage.getItem('progressStartTime')) || Date.now();
+        }
+
+        function checkForPrestige() {
+            if (mainNumber >= prestigeThreshold) {
+                prestigeLevel += 1;
+                prestigeThreshold *= 2;
+                mainNumber = 0;
+                subNumber = 0;
+                clickValue = 0.001;
+                upgradeCost = 2;
+                document.getElementById('prestigeStars').textContent = '*'.repeat(prestigeLevel);
+                saveProgress();
+                updateDisplay();
+                showAchievementModal();
+            }
+        }
+
+        function updateDisplay() {
+            const subNumberFormatted = subNumber.toString().padStart(3, '0');
+            document.getElementById('mainNumber').innerHTML = `${mainNumber}<span>,${subNumberFormatted}</span>`;
+            document.getElementById('upgradeButton').textContent = `Upgrade (Preis: ${upgradeCost})`;
+
+            document.title = `${mainNumber},${subNumberFormatted}`;
+
+            document.getElementById('upgradeButton').disabled = mainNumber < upgradeCost;
+            if (mainNumber < upgradeCost) {
+                document.getElementById('upgradeButton').classList.add('disabled');
+            } else {
+                document.getElementById('upgradeButton').classList.remove('disabled');
+            }
+
+            if (mainNumber >= prestigeThreshold) {
+                document.getElementById('prestigeButton').disabled = false;
+            } else {
+                document.getElementById('prestigeButton').disabled = true;
+            }
+
+            if (prestigeLevel > 0) {
+                document.getElementById('prestigeStars').style.display = 'block';
+                document.getElementById('prestigeMessage').style.display = 'none';
+            } else {
+                document.getElementById('prestigeStars').style.display = 'none';
+                document.getElementById('prestigeMessage').style.display = 'block';
+            }
+
+            const prestigeProgress = (mainNumber / prestigeThreshold) * 100;
+            prestigeProgressBar.style.width = `${prestigeProgress}%`;
+            prestigePercentElement.textContent = `${Math.floor(prestigeProgress)}%`;
+        }
+
+        function updateProgress() {
+            const currentTime = Date.now();
+            const elapsed = currentTime - progressStartTime;
+            const remaining = Math.max(0, progressTime - elapsed);
+
+            const progressPercentage = (elapsed / progressTime) * 100;
+            progressBar.style.width = `${progressPercentage}%`;
+
+            const minutes = Math.floor(remaining / 60000);
+            const seconds = Math.floor((remaining % 60000) / 1000);
+            timerElement.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+
+            if (elapsed >= progressTime) {
+                increaseSubNumber(500);
+                progressStartTime = Date.now();
+                updateDisplay();
+                saveProgress();
+            }
+
+            requestAnimationFrame(updateProgress);
+        }
+
+        function increaseSubNumber(amount) {
+            subNumber += amount;
+            subNumber = Math.floor(subNumber);
+
+            if (subNumber >= 1000) {
+                mainNumber += Math.floor(subNumber / 1000);
+                subNumber = subNumber % 1000;
+            }
+            checkForPrestige();
+        }
+
+        document.getElementById('clickButton').addEventListener('click', function() {
+            increaseSubNumber(clickValue * 1000);
+            updateDisplay();
+            saveProgress();
+        });
+
+        document.getElementById('upgradeButton').addEventListener('click', function() {
+            if (mainNumber >= upgradeCost) {
+                mainNumber -= upgradeCost;
+                clickValue += 0.001;
+                upgradeCost = Math.ceil(upgradeCost * 1.2);
+                updateDisplay();
+                saveProgress();
+            }
+        });
+
+        document.getElementById('prestigeButton').addEventListener('click', function() {
+            checkForPrestige();
+            updateDisplay();
+        });
+
+        document.getElementById('progressBar').addEventListener('click', function() {
+            currentColorIndex = (currentColorIndex + 1) % progressBarColors.length;
+            progressBar.style.backgroundColor = progressBarColors[currentColorIndex];
+        });
+
+        document.getElementById('prestigeProgressBar').addEventListener('click', function() {
+            currentColorIndex = (currentColorIndex + 1) % progressBarColors.length;
+            prestigeProgressBar.style.backgroundColor = progressBarColors[currentColorIndex];
+        });
+
+        document.getElementById('impressumButton').addEventListener('click', function() {
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('impressumModal').style.display = 'block';
+        });
+
+        document.getElementById('closeImpressumModal').addEventListener('click', function() {
+            document.getElementById('impressumModal').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        });
+
+        window.addEventListener('beforeunload', saveProgress);
+
+        document.addEventListener('visibilitychange', function() {
+            if (document.visibilityState === 'visible') {
+                calculateIdleProgress();
+            } else {
+                localStorage.setItem('lastSaveTime', Date.now());
+            }
+        });
+
+        function calculateIdleProgress() {
+            const lastSaveTime = parseInt(localStorage.getItem('lastSaveTime')) || Date.now();
+            const currentTime = Date.now();
+            const timeElapsed = currentTime - lastSaveTime;
+
+            const cycles = Math.floor(timeElapsed / progressTime);
+            const remainingTime = timeElapsed % progressTime;
+
+            increaseSubNumber(cycles * 500);
+
+            progressStartTime = Date.now() - remainingTime;
+
+            updateDisplay();
+            saveProgress();
+        }
+
+        document.getElementById('resetButton').addEventListener('click', function() {
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('modal').style.display = 'block';
+        });
+
+        document.getElementById('confirmReset').addEventListener('click', function() {
+            localStorage.clear();
+            mainNumber = 0;
+            subNumber = 0;
+            clickValue = 0.001;
+            upgradeCost = 2;
+            prestigeLevel = 0;
+            prestigeThreshold = 25000;
+            progressStartTime = Date.now();
+            updateDisplay();
+            saveProgress();
+            document.getElementById('modal').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        });
+
+        document.getElementById('cancelReset').addEventListener('click', function() {
+            document.getElementById('modal').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        });
+
+        document.getElementById('closeAchievementModal').addEventListener('click', function() {
+            document.getElementById('achievementModal').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        });
+
+        function showAchievementModal() {
+            document.getElementById('prestigeLevelDisplay').textContent = prestigeLevel;
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('achievementModal').style.display = 'block';
+        }
+
+        loadProgress();
+        checkForPrestige();
+        calculateIdleProgress();
+        updateDisplay();
+        updateProgress();
+    </script>
+</body>
+</html>
+
