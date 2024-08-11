@@ -414,7 +414,7 @@ Danke und Viel Spaß!
 
         let mainNumber = parseInt(localStorage.getItem('mainNumber')) || 0;
         let subNumber = parseInt(localStorage.getItem('subNumber')) || 0;
-        let clickValue = parseInt(localStorage.getItem('clickValue')) || 1;
+        let clickValue = parseInt(localStorage.getItem('clickValue')) || 1; // Initialer Klick-Wert ist jetzt 1
         let upgradeCost = parseInt(localStorage.getItem('upgradeCost')) || 2;
         let prestigeLevel = parseInt(localStorage.getItem('prestigeLevel')) || 0;
         let prestigeThreshold = parseInt(localStorage.getItem('prestigeThreshold')) || 25000;
@@ -486,7 +486,7 @@ Danke und Viel Spaß!
                 prestigeThreshold *= 2;
                 mainNumber = 0;
                 subNumber = 0;
-                clickValue = 1;
+                clickValue = 1; // Klick-Wert wird bei Aufstieg zurückgesetzt
                 upgradeCost = 2;
                 document.getElementById('prestigeStars').textContent = '*'.repeat(prestigeLevel);
                 saveProgress();
@@ -530,26 +530,27 @@ Danke und Viel Spaß!
 
         function updateProgress() {
             const currentTime = Date.now();
-            const elapsed = currentTime - progressStartTime;
-            const remaining = Math.max(0, progressTime - elapsed);
+            const timeSinceStart = currentTime - progressStartTime;
+            const remainingTime = Math.max(0, progressTime - (elapsedTime + timeSinceStart));
 
-            const progressPercentage = (elapsed / progressTime) * 100;
+            const progressPercentage = ((elapsedTime + timeSinceStart) / progressTime) * 100;
             progressBar.style.width = `${progressPercentage}%`;
 
-            const minutes = Math.floor(remaining / 60000);
-            const seconds = Math.floor((remaining % 60000) / 1000);
+            const minutes = Math.floor(remainingTime / 60000);
+            const seconds = Math.floor((remainingTime % 60000) / 1000);
             timerElement.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
 
-            if (elapsed >= progressTime) {
+            if (elapsedTime + timeSinceStart >= progressTime) {
                 increaseSubNumber(500);
                 progressStartTime = Date.now();
                 elapsedTime = 0;
                 updateDisplay();
                 saveProgress();
             } else {
-                elapsedTime = elapsed;
+                elapsedTime += timeSinceStart;
             }
 
+            progressStartTime = Date.now();
             requestAnimationFrame(updateProgress);
         }
 
@@ -565,7 +566,7 @@ Danke und Viel Spaß!
         }
 
         document.getElementById('clickButton').addEventListener('click', function() {
-            increaseSubNumber(clickValue);
+            increaseSubNumber(clickValue); // Klick-Wert wird jetzt dynamisch verwendet
             updateDisplay();
             saveProgress();
         });
@@ -573,7 +574,7 @@ Danke und Viel Spaß!
         document.getElementById('upgradeButton').addEventListener('click', function() {
             if (mainNumber >= upgradeCost) {
                 mainNumber -= upgradeCost;
-                clickValue += 1; // Klick-Wert wird um 1 erhöht
+                clickValue += 1; // Klick-Wert um 1 erhöhen nach Upgrade
                 upgradeCost = Math.ceil(upgradeCost * 1.2);
                 updateDisplay();
                 saveProgress();
