@@ -13,7 +13,7 @@ Danke und Viel Spaß!
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leerlauf v1.02</title>
+    <title>Leerlauf v1.04</title>
     
     <!-- Favicon -->
     <link rel="icon" href="leerfavicon.ico" type="image/x-icon">
@@ -260,7 +260,7 @@ Danke und Viel Spaß!
 <body>
     <script language="JavaScript" src="https://www.besucherzaehler-kostenlos.de/js/counter.js.php?count=1&id=hTBfSGOqXL&start=0&design=6"></script>
     
-    <h1>Leerlauf v1.02</h1>
+    <h1>Leerlauf v1.04</h1>
     <h2>Das neue Browsergame vom <a href="mailto:datenschrauber@posteo.de">Datenschrauber!</a></h2>
     <div id="prestigeMessage">Die Macht des Nichts-Tuns. Erlebe sie jetzt! 😉</div>
     <div id="prestigeStars"></div>
@@ -414,7 +414,7 @@ Danke und Viel Spaß!
 
         let mainNumber = parseInt(localStorage.getItem('mainNumber')) || 0;
         let subNumber = parseInt(localStorage.getItem('subNumber')) || 0;
-        let clickValue = parseFloat(localStorage.getItem('clickValue')) || 0.001;
+        let clickValue = parseInt(localStorage.getItem('clickValue')) || 1;
         let upgradeCost = parseInt(localStorage.getItem('upgradeCost')) || 2;
         let prestigeLevel = parseInt(localStorage.getItem('prestigeLevel')) || 0;
         let prestigeThreshold = parseInt(localStorage.getItem('prestigeThreshold')) || 25000;
@@ -424,6 +424,7 @@ Danke und Viel Spaß!
         const prestigePercentElement = document.getElementById('prestigePercent');
         const progressTime = 5 * 60 * 1000;
         let progressStartTime = parseInt(localStorage.getItem('progressStartTime')) || Date.now();
+        let elapsedTime = parseInt(localStorage.getItem('elapsedTime')) || 0;
 
         const progressBarColors = [
             '#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#FF00FF', '#00FFFF',
@@ -464,17 +465,19 @@ Danke und Viel Spaß!
             localStorage.setItem('prestigeLevel', prestigeLevel);
             localStorage.setItem('prestigeThreshold', prestigeThreshold);
             localStorage.setItem('progressStartTime', progressStartTime);
+            localStorage.setItem('elapsedTime', elapsedTime);
             localStorage.setItem('lastSaveTime', Date.now());
         }
 
         function loadProgress() {
             mainNumber = parseInt(localStorage.getItem('mainNumber')) || 0;
             subNumber = parseInt(localStorage.getItem('subNumber')) || 0;
-            clickValue = parseFloat(localStorage.getItem('clickValue')) || 0.001;
+            clickValue = parseInt(localStorage.getItem('clickValue')) || 1;
             upgradeCost = parseInt(localStorage.getItem('upgradeCost')) || 2;
             prestigeLevel = parseInt(localStorage.getItem('prestigeLevel')) || 0;
             prestigeThreshold = parseInt(localStorage.getItem('prestigeThreshold')) || 25000;
             progressStartTime = parseInt(localStorage.getItem('progressStartTime')) || Date.now();
+            elapsedTime = parseInt(localStorage.getItem('elapsedTime')) || 0;
         }
 
         function checkForPrestige() {
@@ -483,7 +486,7 @@ Danke und Viel Spaß!
                 prestigeThreshold *= 2;
                 mainNumber = 0;
                 subNumber = 0;
-                clickValue = 0.001;
+                clickValue = 1;
                 upgradeCost = 2;
                 document.getElementById('prestigeStars').textContent = '*'.repeat(prestigeLevel);
                 saveProgress();
@@ -540,8 +543,11 @@ Danke und Viel Spaß!
             if (elapsed >= progressTime) {
                 increaseSubNumber(500);
                 progressStartTime = Date.now();
+                elapsedTime = 0;
                 updateDisplay();
                 saveProgress();
+            } else {
+                elapsedTime = elapsed;
             }
 
             requestAnimationFrame(updateProgress);
@@ -559,7 +565,7 @@ Danke und Viel Spaß!
         }
 
         document.getElementById('clickButton').addEventListener('click', function() {
-            increaseSubNumber(clickValue * 1000);
+            increaseSubNumber(clickValue);
             updateDisplay();
             saveProgress();
         });
@@ -567,7 +573,7 @@ Danke und Viel Spaß!
         document.getElementById('upgradeButton').addEventListener('click', function() {
             if (mainNumber >= upgradeCost) {
                 mainNumber -= upgradeCost;
-                clickValue += 0.001;
+                clickValue += 1; // Klick-Wert wird um 1 erhöht
                 upgradeCost = Math.ceil(upgradeCost * 1.2);
                 updateDisplay();
                 saveProgress();
@@ -634,11 +640,12 @@ Danke und Viel Spaß!
             localStorage.clear();
             mainNumber = 0;
             subNumber = 0;
-            clickValue = 0.001;
+            clickValue = 1;
             upgradeCost = 2;
             prestigeLevel = 0;
             prestigeThreshold = 25000;
             progressStartTime = Date.now();
+            elapsedTime = 0;
             updateDisplay();
             saveProgress();
             document.getElementById('modal').style.display = 'none';
@@ -669,4 +676,3 @@ Danke und Viel Spaß!
     </script>
 </body>
 </html>
-
