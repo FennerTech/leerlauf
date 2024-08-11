@@ -13,7 +13,7 @@ Danke und Viel Spaß!
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leerlauf v1.04</title>
+    <title>Leerlauf v1.05</title>
     
     <!-- Favicon -->
     <link rel="icon" href="leerfavicon.ico" type="image/x-icon">
@@ -260,7 +260,7 @@ Danke und Viel Spaß!
 <body>
     <script language="JavaScript" src="https://www.besucherzaehler-kostenlos.de/js/counter.js.php?count=1&id=hTBfSGOqXL&start=0&design=6"></script>
     
-    <h1>Leerlauf v1.04</h1>
+    <h1>Leerlauf v1.05</h1>
     <h2>Das neue Browsergame vom <a href="mailto:datenschrauber@posteo.de">Datenschrauber!</a></h2>
     <div id="prestigeMessage">Die Macht des Nichts-Tuns. Erlebe sie jetzt! 😉</div>
     <div id="prestigeStars"></div>
@@ -500,8 +500,6 @@ Danke und Viel Spaß!
             document.getElementById('mainNumber').innerHTML = `${mainNumber}<span>,${subNumberFormatted}</span>`;
             document.getElementById('upgradeButton').textContent = `Upgrade (Preis: ${upgradeCost})`;
 
-            document.title = `${mainNumber},${subNumberFormatted}`;
-
             document.getElementById('upgradeButton').disabled = mainNumber < upgradeCost;
             if (mainNumber < upgradeCost) {
                 document.getElementById('upgradeButton').classList.add('disabled');
@@ -524,9 +522,18 @@ Danke und Viel Spaß!
             }
 
             const prestigeProgress = (mainNumber / prestigeThreshold) * 100;
-            prestigeProgressBar.style.width = `${prestigeProgress}%`;
-            prestigePercentElement.textContent = `${Math.floor(prestigeProgress)}%`;
+            document.getElementById('prestigeProgress').style.width = `${prestigeProgress}%`;
+            document.getElementById('prestigePercent').textContent = `${Math.floor(prestigeProgress)}%`;
+
+            updateTabTitle();  // Aktualisiert den Tab-Titel
         }
+
+        function updateTabTitle() {
+            const subNumberFormatted = subNumber.toString().padStart(3, '0');
+            document.title = `${mainNumber},${subNumberFormatted}`;
+        }
+
+        setInterval(updateTabTitle, 5000); // Aktualisiert den Titel alle 5 Sekunden
 
         function updateProgress() {
             const currentTime = Date.now();
@@ -611,6 +618,7 @@ Danke und Viel Spaß!
         document.addEventListener('visibilitychange', function() {
             if (document.visibilityState === 'visible') {
                 calculateIdleProgress();
+                updateDisplay();  // Aktualisiert den Tab-Titel bei Rückkehr zum Tab
             } else {
                 localStorage.setItem('lastSaveTime', Date.now());
             }
