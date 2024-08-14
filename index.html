@@ -13,13 +13,13 @@ Danke und Viel Spaß!
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leerlauf v1.14</title>
+    <title>Leerlauf v1.18</title>
     
     <!-- Favicon -->
     <link rel="icon" href="leerfavicon.ico" type="image/x-icon">
     
     <!-- Meta-Tags für SEO -->
-    <meta name="description" content="Leerlauf ist ein unterhaltsames Idle-Browsergame, entwickelt von Marco Fenner. Erhöhe die Zahl, sammle Aufstiegs-Sterne und verbessere deine Fähigkeiten!">
+    <meta name="description" content="Leerlauf ist ein Langzeit-Idle-Browsergame, entwickelt von Marco Fenner. Erhöhe die Zahl, sammle Aufstiegs-Sterne und verbessere deine Fähigkeiten!">
     <meta name="keywords" content="Idle Game, Browsergame, Leerlauf, Aufstieg, Zahlen erhöhen, HTML5 Spiel, Marco Fenner, Fennertech, Leerlauf-Spiel">
     <meta name="author" content="Marco Fenner">
     <meta name="robots" content="index, follow">
@@ -36,6 +36,7 @@ Danke und Viel Spaß!
     <meta property="twitter:image" content="leerfavicon.ico">
 
     <style>
+        /* Normales CSS für Desktop und normale Browser */
         body {
             background-color: #333;
             color: #ccc;
@@ -45,16 +46,16 @@ Danke und Viel Spaß!
             padding: 0;
             position: relative;
             overflow: hidden;
-            height: 100vh;
+            min-height: 100vh;
         }
         h1 {
-            font-size: 34px;
-            margin-top: 40px;
+            font-size: 38px;
+            margin-top: 24px;
             color: #00FF00;
         }
         h2 {
             font-size: 20px;
-            margin-bottom: 60px;
+            margin-bottom: 40px;
         }
         a {
             color: #fff;
@@ -75,12 +76,12 @@ Danke und Viel Spaß!
         #mainNumber {
             font-size: 70pt;
             color: yellow;
-            margin: 40px auto 20px;
-            transition: transform 0.3s ease, color 0.3s ease; /* Animation für die Erhöhung */
+            margin: 60px auto 30px; /* Abstand zur Zahl vergrößert */
+            transition: transform 0.3s ease, color 0.3s ease;
         }
         #mainNumber.increaseEffect {
-            transform: scale(1.3); /* Vergrößern der Zahl */
-            color: #FFD700; /* Zahl leuchtet kurz auf */
+            transform: scale(1.3);
+            color: #FFD700;
         }
         #mainNumber span {
             font-size: 30pt;
@@ -88,7 +89,7 @@ Danke und Viel Spaß!
         }
         button {
             font-size: 1.2em;
-            margin: 20px 5px;
+            margin: 10px 10px; /* Abstand zwischen den Buttons erhöht */
             padding: 10px 20px;
             cursor: pointer;
             border: none;
@@ -125,7 +126,7 @@ Danke und Viel Spaß!
         }
         #progressContainer {
             width: 53.33%;
-            margin: 40px auto 30px;
+            margin: 40px auto 40px; /* Abstand vor und nach den Progressbars vergrößert */
         }
         #progressBar, #prestigeProgressBar {
             width: 100%;
@@ -218,7 +219,7 @@ Danke und Viel Spaß!
         }
         table {
             width: 30%;
-            margin: 40px auto;
+            margin: 40px auto; /* Abstand zur Tabelle vergrößert */
             color: #fff;
             font-size: 1em;
         }
@@ -265,9 +266,9 @@ Danke und Viel Spaß!
 
         #bonusButton {
             position: absolute;
-            top: -50px;
+            top: 50%; /* Mitte des Bildschirms */
             left: 50%;
-            transform: translateX(-50%);
+            transform: translate(-50%, -50%);
             background-color: #FFD700;
             color: #333;
             padding: 10px 20px;
@@ -276,22 +277,23 @@ Danke und Viel Spaß!
             font-size: 1.5em;
             z-index: 1002;
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
-            transition: top 2s ease-in-out, opacity 0.5s ease-out;
             display: none;
             border: 3px solid #DAA520;
             border-radius: 10px 10px 3px 3px;
             background-image: linear-gradient(to bottom, #FFD700, #FFAA00);
+            opacity: 0;
+            transition: opacity 1s ease;
         }
 
         #bonusButton.show {
-            top: calc(100% - 85px); /* Etwas höher gesetzt, damit er nicht verdeckt wird */
+            opacity: 1;
         }
 
         .questionButton {
             position: absolute;
-            top: -50px;
+            top: 50%; /* Mitte des Bildschirms */
             left: 50%;
-            transform: translateX(-50%);
+            transform: translate(-50%, -50%);
             background-color: #ccc;
             color: #333;
             padding: 10px 20px;
@@ -300,15 +302,16 @@ Danke und Viel Spaß!
             font-size: 1.5em;
             z-index: 1002;
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
-            transition: top 3s ease-in-out, opacity 0.5s ease-out;
             display: none;
             border: 3px solid #aaa;
             border-radius: 10px 10px 3px 3px;
             background-image: linear-gradient(to bottom, #eee, #ccc);
+            opacity: 0;
+            transition: opacity 1s ease;
         }
 
         .questionButton.show {
-            top: calc(100% - 85px); /* Etwas höher gesetzt, damit er nicht verdeckt wird */
+            opacity: 1;
         }
 
         .questionButton.disappear {
@@ -316,12 +319,58 @@ Danke und Viel Spaß!
             transform: scale(0.5);
             transition: opacity 0.5s ease-out, transform 0.5s ease-out;
         }
+
+        /* Spezifische Anpassungen nur für mobile Geräte */
+        @media only screen and (max-width: 768px) {
+            h1 {
+                font-size: 24px;
+            }
+            h2 {
+                font-size: 16px;
+            }
+            #prestigeStars {
+                font-size: 40pt;
+            }
+            #prestigeMessage {
+                font-size: 24px;
+            }
+            #mainNumber {
+                font-size: 50pt;
+            }
+            #mainNumber span {
+                font-size: 20pt;
+            }
+            button {
+                font-size: 1em;
+                padding: 5px 10px;
+            }
+            #progressContainer {
+                width: 90%;
+            }
+            #progressBar, #prestigeProgressBar {
+                height: 20px;
+            }
+            #timer {
+                font-size: 1em;
+            }
+            table {
+                width: 90%;
+                font-size: 0.8em;
+            }
+            td {
+                padding: 3px;
+            }
+            /* Für den Besucherzähler */
+            body {
+                overflow-y: scroll; /* Scrollbar hinzufügen, wenn Inhalt den Bildschirm übersteigt */
+            }
+        }
     </style>
 </head>
 <body>
     <script language="JavaScript" src="https://www.besucherzaehler-kostenlos.de/js/counter.js.php?count=1&id=hTBfSGOqXL&start=0&design=6"></script>
     
-    <h1>Leerlauf v1.14</h1>
+    <h1>Leerlauf v1.18</h1>
     <h2>Das neue Browsergame vom <a href="mailto:datenschrauber@posteo.de">Datenschrauber!</a></h2>
     <div id="prestigeMessage">Die Macht des Nichts-Tuns. Erlebe sie jetzt! 😉</div>
     <div id="prestigeStars"></div>
@@ -632,21 +681,20 @@ Danke und Viel Spaß!
             requestAnimationFrame(updateProgress);
         }
 
-        function increaseSubNumber(amount) {
+        function increaseSubNumber(amount, applyEffect = true) {
             subNumber += amount;
             subNumber = Math.floor(subNumber);
 
             if (subNumber >= 1000) {
                 mainNumber += Math.floor(subNumber / 1000);
                 subNumber = subNumber % 1000;
-                applyIncreaseEffect(); // Effekt anwenden, wenn Hauptzahl erhöht wird
+                if (applyEffect) applyIncreaseEffect(); // Effekt anwenden, wenn Hauptzahl erhöht wird
             }
             checkForPrestige();
         }
 
         document.getElementById('clickButton').addEventListener('click', function() {
-            increaseSubNumber(clickValue);
-            applyIncreaseEffect(); // Effekt anwenden, wenn Klick die Hauptzahl erhöht
+            increaseSubNumber(clickValue, false); // Kein Effekt bei Klick
             updateDisplay();
             saveProgress();
         });
@@ -714,7 +762,7 @@ Danke und Viel Spaß!
             const cycles = Math.floor(timeElapsed / progressTime);
             const remainingTime = timeElapsed % progressTime;
 
-            increaseSubNumber(cycles * 500);
+            increaseSubNumber(cycles * 500, false); // Kein Effekt bei Idle-Fortschritt
 
             progressStartTime = Date.now() - remainingTime;
 
@@ -797,6 +845,11 @@ Danke und Viel Spaß!
             const questionButton = document.createElement('div');
             questionButton.className = 'questionButton';
             questionButton.textContent = '?';
+
+            // Zufällige Position im sichtbaren Bereich
+            questionButton.style.top = `${Math.random() * 80 + 10}%`;
+            questionButton.style.left = `${Math.random() * 80 + 10}%`;
+
             document.body.appendChild(questionButton);
 
             setTimeout(() => {
