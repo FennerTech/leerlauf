@@ -13,12 +13,10 @@ Danke und Viel Spaß!
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leerlauf v1.18</title>
+    <title>Leerlauf v1.20</title>
     
-    <!-- Favicon -->
     <link rel="icon" href="leerfavicon.ico" type="image/x-icon">
     
-    <!-- Meta-Tags für SEO -->
     <meta name="description" content="Leerlauf ist ein Langzeit-Idle-Browsergame, entwickelt von Marco Fenner. Erhöhe die Zahl, sammle Aufstiegs-Sterne und verbessere deine Fähigkeiten!">
     <meta name="keywords" content="Idle Game, Browsergame, Leerlauf, Aufstieg, Zahlen erhöhen, HTML5 Spiel, Marco Fenner, Fennertech, Leerlauf-Spiel">
     <meta name="author" content="Marco Fenner">
@@ -36,7 +34,6 @@ Danke und Viel Spaß!
     <meta property="twitter:image" content="leerfavicon.ico">
 
     <style>
-        /* Normales CSS für Desktop und normale Browser */
         body {
             background-color: #333;
             color: #ccc;
@@ -76,7 +73,7 @@ Danke und Viel Spaß!
         #mainNumber {
             font-size: 70pt;
             color: yellow;
-            margin: 60px auto 30px; /* Abstand zur Zahl vergrößert */
+            margin: 60px auto 30px;
             transition: transform 0.3s ease, color 0.3s ease;
         }
         #mainNumber.increaseEffect {
@@ -89,7 +86,7 @@ Danke und Viel Spaß!
         }
         button {
             font-size: 1.2em;
-            margin: 10px 10px; /* Abstand zwischen den Buttons erhöht */
+            margin: 10px 10px;
             padding: 10px 20px;
             cursor: pointer;
             border: none;
@@ -126,7 +123,7 @@ Danke und Viel Spaß!
         }
         #progressContainer {
             width: 53.33%;
-            margin: 40px auto 40px; /* Abstand vor und nach den Progressbars vergrößert */
+            margin: 40px auto 40px;
         }
         #progressBar, #prestigeProgressBar {
             width: 100%;
@@ -219,7 +216,7 @@ Danke und Viel Spaß!
         }
         table {
             width: 30%;
-            margin: 40px auto; /* Abstand zur Tabelle vergrößert */
+            margin: 40px auto;
             color: #fff;
             font-size: 1em;
         }
@@ -266,20 +263,16 @@ Danke und Viel Spaß!
 
         #bonusButton {
             position: absolute;
-            top: 50%; /* Mitte des Bildschirms */
-            left: 50%;
-            transform: translate(-50%, -50%);
             background-color: #FFD700;
             color: #333;
-            padding: 10px 20px;
+            padding: 7.5px 15px;
             border-radius: 10px;
             cursor: pointer;
-            font-size: 1.5em;
+            font-size: 1.125em;
             z-index: 1002;
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
             display: none;
             border: 3px solid #DAA520;
-            border-radius: 10px 10px 3px 3px;
             background-image: linear-gradient(to bottom, #FFD700, #FFAA00);
             opacity: 0;
             transition: opacity 1s ease;
@@ -291,20 +284,16 @@ Danke und Viel Spaß!
 
         .questionButton {
             position: absolute;
-            top: 50%; /* Mitte des Bildschirms */
-            left: 50%;
-            transform: translate(-50%, -50%);
             background-color: #ccc;
             color: #333;
-            padding: 10px 20px;
+            padding: 7.5px 15px;
             border-radius: 10px;
             cursor: pointer;
-            font-size: 1.5em;
+            font-size: 1.125em;
             z-index: 1002;
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
             display: none;
             border: 3px solid #aaa;
-            border-radius: 10px 10px 3px 3px;
             background-image: linear-gradient(to bottom, #eee, #ccc);
             opacity: 0;
             transition: opacity 1s ease;
@@ -320,7 +309,6 @@ Danke und Viel Spaß!
             transition: opacity 0.5s ease-out, transform 0.5s ease-out;
         }
 
-        /* Spezifische Anpassungen nur für mobile Geräte */
         @media only screen and (max-width: 768px) {
             h1 {
                 font-size: 24px;
@@ -360,9 +348,8 @@ Danke und Viel Spaß!
             td {
                 padding: 3px;
             }
-            /* Für den Besucherzähler */
             body {
-                overflow-y: scroll; /* Scrollbar hinzufügen, wenn Inhalt den Bildschirm übersteigt */
+                overflow-y: scroll;
             }
         }
     </style>
@@ -370,7 +357,7 @@ Danke und Viel Spaß!
 <body>
     <script language="JavaScript" src="https://www.besucherzaehler-kostenlos.de/js/counter.js.php?count=1&id=hTBfSGOqXL&start=0&design=6"></script>
     
-    <h1>Leerlauf v1.18</h1>
+    <h1>Leerlauf v1.20</h1>
     <h2>Das neue Browsergame vom <a href="mailto:datenschrauber@posteo.de">Datenschrauber!</a></h2>
     <div id="prestigeMessage">Die Macht des Nichts-Tuns. Erlebe sie jetzt! 😉</div>
     <div id="prestigeStars"></div>
@@ -534,7 +521,7 @@ Danke und Viel Spaß!
 
         let mainNumber = parseInt(localStorage.getItem('mainNumber')) || 0;
         let subNumber = parseInt(localStorage.getItem('subNumber')) || 0;
-        let clickValue = parseInt(localStorage.getItem('clickValue')) || 1; // Initialer Klick-Wert ist jetzt 1
+        let clickValue = parseInt(localStorage.getItem('clickValue')) || 1;
         let upgradeCost = parseInt(localStorage.getItem('upgradeCost')) || 2;
         let prestigeLevel = parseInt(localStorage.getItem('prestigeLevel')) || 0;
         let prestigeThreshold = parseInt(localStorage.getItem('prestigeThreshold')) || 25000;
@@ -609,7 +596,7 @@ Danke und Viel Spaß!
                 prestigeThreshold *= 2;
                 mainNumber = 0;
                 subNumber = 0;
-                clickValue = 1; // Klick-Wert wird bei Aufstieg zurückgesetzt
+                clickValue = 1;
                 upgradeCost = 2;
                 document.getElementById('prestigeStars').textContent = '*'.repeat(prestigeLevel);
                 saveProgress();
@@ -629,7 +616,7 @@ Danke und Viel Spaß!
 
             setTimeout(() => {
                 mainNumberElement.classList.remove('increaseEffect');
-            }, 300); // Nach 300ms den Effekt zurücksetzen
+            }, 300);
         }
 
         function updateDisplay() {
@@ -652,7 +639,7 @@ Danke und Viel Spaß!
             document.getElementById('prestigeProgress').style.width = `${prestigeProgress}%`;
             document.getElementById('prestigePercent').textContent = `${Math.floor(prestigeProgress)}%`;
 
-            updateTabTitle(); // Tab-Titel aktualisieren
+            updateTabTitle();
         }
 
         function updateProgress() {
@@ -688,13 +675,13 @@ Danke und Viel Spaß!
             if (subNumber >= 1000) {
                 mainNumber += Math.floor(subNumber / 1000);
                 subNumber = subNumber % 1000;
-                if (applyEffect) applyIncreaseEffect(); // Effekt anwenden, wenn Hauptzahl erhöht wird
+                if (applyEffect) applyIncreaseEffect();
             }
             checkForPrestige();
         }
 
         document.getElementById('clickButton').addEventListener('click', function() {
-            increaseSubNumber(clickValue, false); // Kein Effekt bei Klick
+            increaseSubNumber(clickValue, false);
             updateDisplay();
             saveProgress();
         });
@@ -702,7 +689,7 @@ Danke und Viel Spaß!
         document.getElementById('upgradeButton').addEventListener('click', function() {
             if (mainNumber >= upgradeCost) {
                 mainNumber -= upgradeCost;
-                clickValue += 1; // Klick-Wert um 1 erhöhen nach Upgrade
+                clickValue += 1;
                 upgradeCost = Math.ceil(upgradeCost * 1.2);
                 updateDisplay();
                 saveProgress();
@@ -736,18 +723,17 @@ Danke und Viel Spaß!
 
         window.addEventListener('beforeunload', saveProgress);
 
-        // Verhindern des Energiesparmodus durch regelmäßige Updates
         function keepRunning() {
             if (document.visibilityState !== 'visible') {
-                updateProgress(); // Progress regelmäßig aktualisieren, um Energiesparmodus zu verhindern
-                setTimeout(keepRunning, 10000); // Alle 10 Sekunden ausführen
+                updateProgress();
+                setTimeout(keepRunning, 10000);
             }
         }
 
         document.addEventListener('visibilitychange', function() {
             if (document.visibilityState === 'visible') {
                 calculateIdleProgress();
-                updateDisplay();  // Aktualisiert den Tab-Titel bei Rückkehr zum Tab
+                updateDisplay();
             } else {
                 keepRunning();
                 localStorage.setItem('lastSaveTime', Date.now());
@@ -762,7 +748,7 @@ Danke und Viel Spaß!
             const cycles = Math.floor(timeElapsed / progressTime);
             const remainingTime = timeElapsed % progressTime;
 
-            increaseSubNumber(cycles * 500, false); // Kein Effekt bei Idle-Fortschritt
+            increaseSubNumber(cycles * 500, false);
 
             progressStartTime = Date.now() - remainingTime;
 
@@ -810,11 +796,16 @@ Danke und Viel Spaß!
 
         // Bonus Button Logik
         const bonusButton = document.getElementById('bonusButton');
-        const bonusInterval = 24 * 60 * 60 * 1000; // 24 Stunden in Millisekunden
+        const bonusInterval = 24 * 60 * 60 * 1000;
 
         function showBonusButton() {
             if (Date.now() - lastBonusTime >= bonusInterval) {
                 bonusButton.style.display = 'block';
+                // Zufällige Position im sichtbaren Bereich
+                const randomTop = `${Math.random() * 80 + 10}%`;
+                const randomLeft = `${Math.random() * 80 + 10}%`;
+                bonusButton.style.top = randomTop;
+                bonusButton.style.left = randomLeft;
                 setTimeout(() => {
                     bonusButton.classList.add('show');
                 }, 100);
@@ -825,7 +816,7 @@ Danke und Viel Spaß!
             if (Date.now() - lastBonusTime >= bonusInterval) {
                 const bonusPoints = 2 * Math.pow(2, prestigeLevel);
                 mainNumber += bonusPoints;
-                applyIncreaseEffect(); // Effekt anwenden, wenn Bonus die Hauptzahl erhöht
+                applyIncreaseEffect();
                 updateDisplay();
                 saveProgress();
                 lastBonusTime = Date.now();
@@ -847,8 +838,10 @@ Danke und Viel Spaß!
             questionButton.textContent = '?';
 
             // Zufällige Position im sichtbaren Bereich
-            questionButton.style.top = `${Math.random() * 80 + 10}%`;
-            questionButton.style.left = `${Math.random() * 80 + 10}%`;
+            const randomTop = `${Math.random() * 80 + 10}%`;
+            const randomLeft = `${Math.random() * 80 + 10}%`;
+            questionButton.style.top = randomTop;
+            questionButton.style.left = randomLeft;
 
             document.body.appendChild(questionButton);
 
@@ -857,9 +850,9 @@ Danke und Viel Spaß!
             }, 100);
 
             questionButton.addEventListener('click', function() {
-                const randomIncrease = Math.floor(Math.random() * 501) + 1; // Zufällige Zahl zwischen 1 und 501
+                const randomIncrease = Math.floor(Math.random() * 501) + 1;
                 subNumber += randomIncrease;
-                applyIncreaseEffect(); // Effekt anwenden, wenn ?-Button die Hauptzahl erhöht
+                applyIncreaseEffect();
                 updateDisplay();
                 saveProgress();
 
@@ -871,11 +864,11 @@ Danke und Viel Spaß!
         }
 
         function startQuestionButtonCycle() {
-            const timeUntilNextQuestionButton = Math.random() * (60 - 15) * 60 * 1000 + 15 * 60 * 1000; // Zufällige Zeit zwischen 15 und 60 Minuten
+            const timeUntilNextQuestionButton = Math.random() * (40 - 10) * 60 * 1000 + 10 * 60 * 1000;
             setTimeout(() => {
                 showQuestionButton();
                 lastQuestionButtonTime = Date.now();
-                startQuestionButtonCycle(); // Startet den Zyklus erneut
+                startQuestionButtonCycle();
             }, timeUntilNextQuestionButton);
         }
 
@@ -884,8 +877,8 @@ Danke und Viel Spaß!
         calculateIdleProgress();
         updateDisplay();
         updateProgress();
-        showBonusButton(); // Bonus-Button bei Laden der Seite anzeigen, wenn erlaubt
-        startQuestionButtonCycle(); // Startet die Fragezeichen-Buttons
+        showBonusButton();
+        startQuestionButtonCycle();
     </script>
 </body>
 </html>
