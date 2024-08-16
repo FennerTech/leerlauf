@@ -13,7 +13,7 @@ Danke und Viel Spaß!
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leerlauf v1.34</title>
+    <title>Leerlauf v1.38</title>
     
     <link rel="icon" href="leerfavicon.ico" type="image/x-icon">
     
@@ -144,7 +144,7 @@ Danke und Viel Spaß!
             font-size: 1.2em;
             margin-bottom: 20px;
         }
-        #modal, #achievementModal, #impressumModal {
+        #modal, #achievementModal, #impressumModal, #logModal {
             display: none;
             position: fixed;
             top: 50%;
@@ -162,7 +162,7 @@ Danke und Viel Spaß!
         #impressumModal {
             text-align: left;
         }
-        #impressumModal .closeButton {
+        #impressumModal .closeButton, #logModal .closeButton {
             position: absolute;
             top: 10px;
             right: 10px;
@@ -174,27 +174,24 @@ Danke und Viel Spaß!
             border: none;
             font-size: 1.2em;
         }
-        #achievementModal h3 {
-            margin-bottom: 20px;
-            color: #FFD700;
-            font-size: 1.5em;
-        }
-        #modal h3 {
+        #achievementModal h3, #logModal h3 {
             margin-bottom: 20px;
         }
-        #modal button, #achievementModal button {
-            margin: 5px;
-            padding: 10px 20px;
-            font-size: 1em;
-            cursor: pointer;
-            border-radius: 5px;
-            background-color: #555;
+        #logModal h3 {
+            margin-bottom: 40px;
+        }
+        #logTable {
+            width: 100%;
+            margin-top: 20px;
             color: #fff;
-            border: none;
-            transition: background-color 0.3s ease;
+            border-collapse: collapse;
         }
-        #modal button:hover, #achievementModal button:hover {
-            background-color: #666;
+        #logTable th, #logTable td {
+            padding: 10px;
+            border: 1px solid #666;
+        }
+        #logTable th {
+            text-align: left;
         }
         #overlay {
             display: none;
@@ -356,15 +353,14 @@ Danke und Viel Spaß!
 <body>
     <script language="JavaScript" src="https://www.besucherzaehler-kostenlos.de/js/counter.js.php?count=1&id=hTBfSGOqXL&start=0&design=6"></script>
     
-    <h1>Leerlauf v1.34</h1>
+    <h1>Leerlauf v1.38</h1>
     <h2>Das neue Browsergame vom <a href="mailto:datenschrauber@posteo.de">Datenschrauber!</a></h2>
     <div id="prestigeMessage">Die Macht des Nichts-Tuns. Erlebe sie jetzt! 😉</div>
     <div id="prestigeStars"></div>
     <div id="mainNumber">0<span>,000</span></div>
     <button id="impressumButton">Impressum</button>
     <button id="resetButton">Null</button>
-    <button id="increaseSizeButton">+</button>
-    <button id="decreaseSizeButton">-</button>
+    <button id="logButton">Logbuch</button>
     <button id="prestigeButton" disabled>Aufstieg</button>
     <button id="upgradeButton">Upgrade (Preis: 2)</button>
     <button id="clickButton">Klick!</button>
@@ -470,6 +466,21 @@ Danke und Viel Spaß!
         <p>Der Quellcode dieser Seite ist vollständig für jedermann einsehbar.</p>
     </div>
 
+    <div id="logModal">
+        <button class="closeButton" id="closeLogModal">X</button>
+        <h3>Live-Ereignisse</h3>
+        <table id="logTable">
+            <thead>
+                <tr>
+                    <th>Erhöhung</th>
+                    <th>Zeitstempel</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
     <div id="cookieBanner">
         <p>Diese Website verwendet Cookies, um Ihnen das bestmögliche Erlebnis zu bieten. Indem Sie auf "Annehmen" klicken, stimmen Sie der Verwendung von Cookies zu.</p>
         <button id="acceptCookies">Annehmen</button>
@@ -525,6 +536,7 @@ Danke und Viel Spaß!
         let prestigeLevel = parseInt(localStorage.getItem('prestigeLevel')) || 0;
         let prestigeThreshold = parseInt(localStorage.getItem('prestigeThreshold')) || 25000;
         let clickCount = parseInt(localStorage.getItem('clickCount')) || 0;
+        let logEntries = JSON.parse(localStorage.getItem('logEntries')) || [];
         const progressBar = document.getElementById('progress');
         const prestigeProgressBar = document.getElementById('prestigeProgress');
         const timerElement = document.getElementById('timer');
@@ -542,30 +554,6 @@ Danke und Viel Spaß!
         ];
         let currentColorIndex = 0;
 
-        function adjustFontSize(delta) {
-            const mainNumberElement = document.getElementById('mainNumber');
-            const spanElement = mainNumberElement.querySelector('span');
-
-            let mainFontSize = parseFloat(mainNumberElement.style.fontSize) || 70;
-            let spanFontSize = parseFloat(spanElement.style.fontSize) || 30;
-
-            mainFontSize += delta;
-            spanFontSize += delta;
-
-            mainNumberElement.style.fontSize = mainFontSize + 'pt';
-            spanElement.style.fontSize = spanFontSize + 'pt';
-
-            document.getElementById('prestigeStars').style.fontSize = mainFontSize + 'pt';
-        }
-
-        document.getElementById('increaseSizeButton').addEventListener('click', function() {
-            adjustFontSize(2);
-        });
-
-        document.getElementById('decreaseSizeButton').addEventListener('click', function() {
-            adjustFontSize(-2);
-        });
-
         function saveProgress() {
             localStorage.setItem('mainNumber', mainNumber);
             localStorage.setItem('subNumber', subNumber);
@@ -578,6 +566,7 @@ Danke und Viel Spaß!
             localStorage.setItem('lastSaveTime', Date.now());
             localStorage.setItem('lastBonusTime', lastBonusTime);
             localStorage.setItem('clickCount', clickCount);
+            localStorage.setItem('logEntries', JSON.stringify(logEntries));
         }
 
         function loadProgress() {
@@ -588,6 +577,31 @@ Danke und Viel Spaß!
             prestigeLevel = parseInt(localStorage.getItem('prestigeLevel')) || 0;
             prestigeThreshold = parseInt(localStorage.getItem('prestigeThreshold')) || 25000;
             clickCount = parseInt(localStorage.getItem('clickCount')) || 0;
+            logEntries = JSON.parse(localStorage.getItem('logEntries')) || [];
+        }
+
+        function updateLogEntries(amount, isMainNumber) {
+            const timestamp = new Date().toLocaleString();
+            const formattedValue = amount === 0 ? 'Rückkehr' : isMainNumber ? `${amount},000` : `${amount}`;
+            logEntries.unshift({ value: formattedValue, time: timestamp });
+            if (logEntries.length > 15) {
+                logEntries.pop();
+            }
+            saveProgress();
+        }
+
+        function populateLogTable() {
+            const logTableBody = document.getElementById('logTable').getElementsByTagName('tbody')[0];
+            logTableBody.innerHTML = '';
+
+            logEntries.forEach(entry => {
+                const row = logTableBody.insertRow();
+                const valueCell = row.insertCell(0);
+                const timeCell = row.insertCell(1);
+
+                valueCell.textContent = entry.value;
+                timeCell.textContent = entry.time;
+            });
         }
 
         function checkForPrestige() {
@@ -694,7 +708,7 @@ Danke und Viel Spaß!
             timerElement.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
 
             if (elapsedTime + timeSinceStart >= progressTime) {
-                increaseSubNumber(500); // Hier wird die Nebenzahl erhöht
+                increaseSubNumber(500);
                 progressStartTime = Date.now();
                 elapsedTime = 0;
                 updateDisplay();
@@ -717,6 +731,7 @@ Danke und Viel Spaß!
                 subNumber = subNumber % 1000;
                 applyIncreaseEffect();
             }
+            updateLogEntries(amount, false);
             checkForPrestige();
         }
 
@@ -724,6 +739,7 @@ Danke und Viel Spaß!
             mainNumber += amount;
             showIncreaseValue(amount, 'left', document.getElementById('mainNumber'));
             applyIncreaseEffect();
+            updateLogEntries(amount, true);
             checkForPrestige();
         }
 
@@ -769,6 +785,17 @@ Danke und Viel Spaß!
             document.getElementById('overlay').style.display = 'none';
         });
 
+        document.getElementById('logButton').addEventListener('click', function() {
+            populateLogTable();
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('logModal').style.display = 'block';
+        });
+
+        document.getElementById('closeLogModal').addEventListener('click', function() {
+            document.getElementById('logModal').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        });
+
         window.addEventListener('beforeunload', saveProgress);
 
         function keepRunning() {
@@ -796,7 +823,7 @@ Danke und Viel Spaß!
             const cycles = Math.floor(timeElapsed / progressTime);
             const remainingTime = timeElapsed % progressTime;
 
-            increaseSubNumber(cycles * 500); // Hier wird die Nebenzahl erhöht
+            increaseSubNumber(cycles * 500);
 
             progressStartTime = Date.now() - remainingTime;
 
@@ -818,6 +845,7 @@ Danke und Viel Spaß!
             prestigeLevel = 0;
             prestigeThreshold = 25000;
             clickCount = 0;
+            logEntries = [];
             progressStartTime = Date.now();
             elapsedTime = 0;
             lastBonusTime = 0;
@@ -889,7 +917,7 @@ Danke und Viel Spaß!
         });
 
         function showFButton() {
-            if (fButtonVisible) return; // Nur ein FButton gleichzeitig
+            if (fButtonVisible) return;
 
             fButtonVisible = true;
             const randomIncrease = Math.floor(Math.random() * 501) + 1;
@@ -914,10 +942,10 @@ Danke und Viel Spaß!
                     fButton.remove();
                     fButtonVisible = false;
                 }, 500);
-            }, 10000); // 10 Sekunden Timeout
+            }, 10000);
 
             fButton.addEventListener('click', function() {
-                clearTimeout(removeFButtonTimeout); // Stoppe das automatische Ausblenden
+                clearTimeout(removeFButtonTimeout);
 
                 const mainNumberElement = document.getElementById('mainNumber');
                 const commaElement = mainNumberElement.querySelector('span');
@@ -943,7 +971,7 @@ Danke und Viel Spaß!
         }
 
         function startFButtonCycle() {
-            const timeUntilNextFButton = Math.random() * 10000 + 5000; // 5 bis 15 Sekunden
+            const timeUntilNextFButton = Math.random() * 10000 + 5000;
             setTimeout(() => {
                 showFButton();
                 startFButtonCycle();
@@ -957,7 +985,7 @@ Danke und Viel Spaß!
         updateProgress();
         showBonusButton();
         startFButtonCycle();
-        setInterval(updateTabTitle, 5000);  // Aktualisiert den Tab-Titel regelmäßig
+        setInterval(updateTabTitle, 5000);
     </script>
 </body>
 </html>
