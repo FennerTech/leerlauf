@@ -14,7 +14,7 @@ Danke und Viel Spaß!
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leerlauf v1.42</title>
+    <title>Leerlauf v1.52</title> <!-- Versionsnummer angepasst -->
 
     <link rel="icon" href="leerfavicon.ico" type="image/x-icon">
 
@@ -407,7 +407,7 @@ Danke und Viel Spaß!
 <body>
     <script language="JavaScript" src="https://www.besucherzaehler-kostenlos.de/js/counter.js.php?count=1&id=hTBfSGOqXL&start=0&design=6"></script>
 
-    <h1>Leerlauf v1.42</h1>
+    <h1>Leerlauf v1.52</h1> <!-- Versionsnummer angepasst -->
     <h2>Das neue Browsergame vom <a href="mailto:datenschrauber@posteo.de">Datenschrauber!</a></h2>
     <div id="prestigeMessage">Die Macht des Nichts-Tuns. Erlebe sie jetzt! 😉</div>
     <div id="prestigeStars"></div>
@@ -481,7 +481,7 @@ Danke und Viel Spaß!
 
         <p><strong>Haftung für Links</strong><br> Mein Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte ich keinen Einfluss habe. Deshalb kann ich für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft. Rechtswidrige Inhalte waren zum Zeitpunkt der Verlinkung nicht erkennbar. Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte einer Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von Rechtsverletzungen werde ich derartige Links umgehend entfernen.</p>
 
-        <p><strong>Urheberrecht</strong><br> Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers. Downloads und Kopien dieser Seite sind nur für den privaten, nicht kommerziellen Gebrauch gestattet. Soweit die Inhalte auf dieser Seite nicht vom Betreiber erstellt wurden, werden die Urheberrechte Dritter beachtet. Insbesondere werden Inhalte Dritter als solche gekennzeichnet. Sollten Sie trotzdem auf eine Urheberrechtsverletzung aufmerksam werden, bitte ich um einen entsprechenden Hinweis. Bei Bekanntwerden von Rechtsverletzungen werde ich derartige Inhalte umgehend entfernen.</p>
+        <p><strong>Urheberrecht</strong><br> Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers. Downloads und Kopien dieser Seite sind nur für den privaten, nicht kommerziellen Gebrauch gestattet. Soweit die Inhalte auf dieser Seite nicht vom Betreiber erstellt wurden, werden die Urheberrechte Dritter beachtet. Insbesondere werden Inhalte Dritter als solche gekennzeichnet. Sollten Sie trotzdem auf eine Urheberrechtsverletzung aufmerksam werden, bitte ich um einen entsprechenden Hinweis. Bei Bekanntwerden von Rechtsverletzungen werde ich diese Inhalte umgehend entfernen.</p>
 
         <h3>Datenschutz:</h3>
         <p>Die Nutzung meiner Webseite ist in der Regel ohne Angabe personenbezogener Daten möglich. Soweit auf meinen Seiten personenbezogene Daten (beispielsweise Name, Anschrift oder E-Mail-Adressen) erhoben werden, erfolgt dies, soweit möglich, stets auf freiwilliger Basis. Diese Daten werden ohne Ihre ausdrückliche Zustimmung nicht an Dritte weitergegeben. Ich weise darauf hin, dass die Datenübertragung im Internet (z.B. bei der Kommunikation per E-Mail) Sicherheitslücken aufweisen kann. Ein lückenloser Schutz der Daten vor dem Zugriff durch Dritte ist nicht möglich.</p>
@@ -578,7 +578,6 @@ Danke und Viel Spaß!
         let elapsedTime = parseInt(localStorage.getItem('elapsedTime')) || 0;
         let lastBonusTime = parseInt(localStorage.getItem('lastBonusTime')) || 0;
         let fButtonVisible = false;
-        let lastMainNumber = mainNumber;
 
         const progressBarColors = [
             '#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#FF00FF', '#00FFFF',
@@ -613,16 +612,24 @@ Danke und Viel Spaß!
             logEntries = JSON.parse(localStorage.getItem('logEntries')) || [];
         }
 
-        function updateLogEntries(amount, isMainNumber) {
-            // Nur positive Erhöhungen aufzeichnen
+        function updateLogEntries(amount, isMainNumber = false) {
             if (amount > 0) {
                 const timestamp = new Date().toLocaleString();
                 const formattedValue = isMainNumber ? `+${amount},000` : `+${amount}`;
-                logEntries.unshift({ value: formattedValue, time: timestamp });
-                if (logEntries.length > 15) {
-                    logEntries.pop();
+                // Log only subNumber changes or mainNumber for Bonus Button
+                if (!isMainNumber && subNumber >= 1000) {
+                    amount = subNumber % 1000;
                 }
-                saveProgress();
+
+                if (isMainNumber || amount < 1000) {
+                    if (logEntries.length === 0 || logEntries[0].value !== formattedValue || logEntries[0].time !== timestamp) {
+                        logEntries.unshift({ value: formattedValue, time: timestamp });
+                        if (logEntries.length > 15) {
+                            logEntries.pop();
+                        }
+                        saveProgress();
+                    }
+                }
             }
         }
 
@@ -712,7 +719,7 @@ Danke und Viel Spaß!
 
             if (elapsedTime + timeSinceStart >= progressTime) {
                 increaseSubNumber(500);
-                updateLogEntries(500, false); // Hinzufügen des Logbucheintrags
+                updateLogEntries(500); // Hinzufügen des Logbucheintrags nur für Nebenzahl
                 progressStartTime = Date.now();
                 elapsedTime = 0;
                 updateDisplay();
@@ -733,9 +740,9 @@ Danke und Viel Spaß!
                 mainNumber += Math.floor(subNumber / 1000);
                 subNumber = subNumber % 1000;
                 applyIncreaseEffect();
-                updateLogEntries(Math.floor(subNumber / 1000), true);
+                updateLogEntries(Math.floor(subNumber / 1000)); // Nur für Nebenzahl, keine Log für Hauptzahl
             } else {
-                updateLogEntries(amount, false);
+                updateLogEntries(amount); // Nur für Nebenzahl
             }
             checkForPrestige();
         }
@@ -743,7 +750,7 @@ Danke und Viel Spaß!
         function increaseMainNumber(amount) {
             mainNumber += amount;
             applyIncreaseEffect();
-            updateLogEntries(amount, true);
+            updateLogEntries(amount, true); // Log für Bonus-Button, wo auch Hauptzahl betroffen ist
             checkForPrestige();
         }
 
@@ -816,7 +823,6 @@ Danke und Viel Spaß!
             } else {
                 keepRunning();
                 localStorage.setItem('lastSaveTime', Date.now());
-                lastMainNumber = mainNumber;
             }
         });
 
@@ -830,11 +836,6 @@ Danke und Viel Spaß!
 
             const increase = cycles * 500;
             increaseSubNumber(increase);
-
-            const difference = mainNumber - lastMainNumber;
-            if (difference > 0) {
-                updateLogEntries(difference, true);
-            }
 
             progressStartTime = Date.now() - remainingTime;
 
