@@ -10,13 +10,14 @@ Danke und Viel Spaß!
 
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leerlauf v1.38</title>
-    
+    <title>Leerlauf v1.42</title>
+
     <link rel="icon" href="leerfavicon.ico" type="image/x-icon">
-    
+
     <meta name="description" content="Leerlauf ist ein Langzeit-Idle-Browsergame, entwickelt von Marco Fenner. Erhöhe die Zahl, sammle Aufstiegs-Sterne und verbessere deine Fähigkeiten!">
     <meta name="keywords" content="Idle Game, Browsergame, Leerlauf, Aufstieg, Zahlen erhöhen, HTML5 Spiel, Marco Fenner, Fennertech, Leerlauf-Spiel">
     <meta name="author" content="Marco Fenner">
@@ -45,31 +46,37 @@ Danke und Viel Spaß!
             overflow: hidden;
             min-height: 100vh;
         }
+
         h1 {
             font-size: 38px;
             margin-top: 24px;
             color: #00FF00;
         }
+
         h2 {
             font-size: 20px;
             margin-bottom: 40px;
         }
+
         a {
             color: #fff;
             text-decoration: underline;
         }
+
         #prestigeStars {
             font-size: 70pt;
             margin-bottom: 40px;
             color: #00BFFF;
             display: none;
         }
+
         #prestigeMessage {
             font-size: 34px;
             margin-bottom: 40px;
             color: #ccc;
             display: none;
         }
+
         #mainNumber {
             font-size: 70pt;
             color: yellow;
@@ -77,14 +84,17 @@ Danke und Viel Spaß!
             transition: transform 0.3s ease, color 0.3s ease;
             position: relative;
         }
+
         #mainNumber.increaseEffect {
             transform: scale(1.3);
             color: #FFD700;
         }
+
         #mainNumber span {
             font-size: 30pt;
             color: white;
         }
+
         button {
             font-size: 1.2em;
             margin: 10px 10px;
@@ -97,36 +107,45 @@ Danke und Viel Spaß!
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
             transition: background-color 0.3s ease, color 0.3s ease;
         }
+
         button:hover {
             background-color: #777;
             color: #fff;
         }
+
         button:disabled {
             background-color: #555;
             color: #888;
             cursor: not-allowed;
         }
+
         #resetButton {
             background-color: #ff0000;
             color: #fff;
             margin-right: 5px;
         }
+
         #impressumButton {
             margin-right: 5px;
         }
+
         #clickButton {
             background-color: #28a745;
             color: #fff;
             font-weight: bold;
         }
+
         #clickButton:hover {
             background-color: #218838;
         }
+
         #progressContainer {
             width: 53.33%;
             margin: 40px auto 40px;
         }
-        #progressBar, #prestigeProgressBar {
+
+        #progressBar,
+        #prestigeProgressBar {
             width: 100%;
             height: 30px;
             background-color: #555;
@@ -135,16 +154,23 @@ Danke und Viel Spaß!
             margin-bottom: 20px;
             cursor: pointer;
         }
-        #progress, #prestigeProgress {
+
+        #progress,
+        #prestigeProgress {
             height: 100%;
             background-color: #ccc;
             width: 0;
         }
+
         #timer {
             font-size: 1.2em;
             margin-bottom: 20px;
         }
-        #modal, #achievementModal, #impressumModal, #logModal {
+
+        #modal,
+        #achievementModal,
+        #impressumModal,
+        #logModal {
             display: none;
             position: fixed;
             top: 50%;
@@ -159,10 +185,13 @@ Danke und Viel Spaß!
             max-height: 90%;
             overflow-y: auto;
         }
+
         #impressumModal {
             text-align: left;
         }
-        #impressumModal .closeButton, #logModal .closeButton {
+
+        #impressumModal .closeButton,
+        #logModal .closeButton {
             position: absolute;
             top: 10px;
             right: 10px;
@@ -174,25 +203,33 @@ Danke und Viel Spaß!
             border: none;
             font-size: 1.2em;
         }
-        #achievementModal h3, #logModal h3 {
+
+        #achievementModal h3,
+        #logModal h3 {
             margin-bottom: 20px;
         }
+
         #logModal h3 {
             margin-bottom: 40px;
         }
+
         #logTable {
             width: 100%;
             margin-top: 20px;
             color: #fff;
             border-collapse: collapse;
         }
-        #logTable th, #logTable td {
+
+        #logTable th,
+        #logTable td {
             padding: 10px;
             border: 1px solid #666;
         }
+
         #logTable th {
             text-align: left;
         }
+
         #overlay {
             display: none;
             position: fixed;
@@ -203,32 +240,40 @@ Danke und Viel Spaß!
             background-color: rgba(0, 0, 0, 0.5);
             z-index: 999;
         }
-        #upgradeButton:disabled, #prestigeButton:disabled {
+
+        #upgradeButton:disabled,
+        #prestigeButton:disabled {
             background-color: #555;
             cursor: not-allowed;
         }
+
         #prestigePercent {
             font-size: 1.2em;
             color: #fff;
             margin-top: 10px;
         }
+
         table {
             width: 30%;
             margin: 40px auto;
             color: #fff;
             font-size: 1em;
         }
+
         td {
             padding: 5px;
             text-align: left;
         }
+
         td:first-child {
             text-align: right;
             padding-right: 10px;
         }
+
         td:last-child {
             text-align: left;
         }
+
         #cookieBanner {
             position: fixed;
             bottom: -200px;
@@ -242,9 +287,11 @@ Danke und Viel Spaß!
             transition: bottom 0.5s ease;
             box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.3);
         }
+
         #cookieBanner.show {
             bottom: 0;
         }
+
         #cookieBanner button {
             margin: 10px;
             padding: 10px 20px;
@@ -255,11 +302,13 @@ Danke und Viel Spaß!
             border: none;
             transition: background-color 0.3s ease;
         }
+
         #cookieBanner button:hover {
             background-color: #666;
         }
 
-        #bonusButton, .fButton {
+        #bonusButton,
+        .fButton {
             position: absolute;
             background-color: #FFD700;
             color: #333;
@@ -273,10 +322,11 @@ Danke und Viel Spaß!
             border: 3px solid #DAA520;
             background-image: linear-gradient(to bottom, #FFD700, #FFAA00);
             opacity: 0;
-            transition: opacity 1s ease;
+            transition: opacity 1s ease, transform 0.5s ease-out;
         }
 
-        #bonusButton.show, .fButton.show {
+        #bonusButton.show,
+        .fButton.show {
             opacity: 1;
             display: block;
         }
@@ -295,65 +345,69 @@ Danke und Viel Spaß!
             transition: opacity 0.5s ease-out, transform 0.5s ease-out;
         }
 
-        .increaseValue {
-            position: absolute;
-            color: #FFD700;
-            font-size: 20px;
-            font-weight: bold;
-            z-index: 1003;
-            transition: opacity 1s ease, transform 1s ease;
-            opacity: 0;
-        }
-
         @media only screen and (max-width: 768px) {
             h1 {
                 font-size: 24px;
             }
+
             h2 {
                 font-size: 16px;
             }
+
             #prestigeStars {
                 font-size: 40pt;
             }
+
             #prestigeMessage {
                 font-size: 24px;
             }
+
             #mainNumber {
                 font-size: 50pt;
             }
+
             #mainNumber span {
                 font-size: 20pt;
             }
+
             button {
                 font-size: 1em;
                 padding: 5px 10px;
             }
+
             #progressContainer {
                 width: 90%;
             }
-            #progressBar, #prestigeProgressBar {
+
+            #progressBar,
+            #prestigeProgressBar {
                 height: 20px;
             }
+
             #timer {
                 font-size: 1em;
             }
+
             table {
                 width: 90%;
                 font-size: 0.8em;
             }
+
             td {
                 padding: 3px;
             }
+
             body {
                 overflow-y: scroll;
             }
         }
     </style>
 </head>
+
 <body>
     <script language="JavaScript" src="https://www.besucherzaehler-kostenlos.de/js/counter.js.php?count=1&id=hTBfSGOqXL&start=0&design=6"></script>
-    
-    <h1>Leerlauf v1.38</h1>
+
+    <h1>Leerlauf v1.42</h1>
     <h2>Das neue Browsergame vom <a href="mailto:datenschrauber@posteo.de">Datenschrauber!</a></h2>
     <div id="prestigeMessage">Die Macht des Nichts-Tuns. Erlebe sie jetzt! 😉</div>
     <div id="prestigeStars"></div>
@@ -377,11 +431,26 @@ Danke und Viel Spaß!
     </div>
 
     <table>
-        <tr><td>Online:</td><td><span class="BZonline"></span></td></tr>
-        <tr><td>Heute:</td><td><span class="BZheute"></span></td></tr>
-        <tr><td>Gestern:</td><td><span class="BZgestern"></span></td></tr>
-        <tr><td>Gesamt:</td><td><span class="BZgesamt"></span></td></tr>
-        <tr><td>Seit:</td><td><span class="BZseit"></span></td></tr>
+        <tr>
+            <td>Online:</td>
+            <td><span class="BZonline"></span></td>
+        </tr>
+        <tr>
+            <td>Heute:</td>
+            <td><span class="BZheute"></span></td>
+        </tr>
+        <tr>
+            <td>Gestern:</td>
+            <td><span class="BZgestern"></span></td>
+        </tr>
+        <tr>
+            <td>Gesamt:</td>
+            <td><span class="BZgesamt"></span></td>
+        </tr>
+        <tr>
+            <td>Seit:</td>
+            <td><span class="BZseit"></span></td>
+        </tr>
     </table>
 
     <div id="overlay"></div>
@@ -403,56 +472,19 @@ Danke und Viel Spaß!
         <button class="closeButton" id="closeImpressumModal">X</button>
         <h2>Impressum</h2>
         <p><strong>Angaben gemäß § 5 TMG</strong></p>
-        <p><strong>Betreiber der Website:</strong><br>
-            Marco Fenner<br>
-            Wiardastraße 19<br>
-            26603 Aurich<br>
-            Deutschland</p>
-        <p><strong>Kontakt:</strong><br>
-            E-Mail: <a href="mailto:datenschrauber@posteo.de">datenschrauber@posteo.de</a><br>
-            Telefon: +49 1573 004 2105</p>
-        <p><strong>Vielen Dank für den Besuch meiner Website.<br>Wenn Sie Ihnen gefallen hat, würde ich mich über
-                eine kurze Nachricht sehr freuen.</strong> 😊</p>
+        <p><strong>Betreiber der Website:</strong><br> Marco Fenner<br> Wiardastraße 19<br> 26603 Aurich<br> Deutschland</p>
+        <p><strong>Kontakt:</strong><br> E-Mail: <a href="mailto:datenschrauber@posteo.de">datenschrauber@posteo.de</a><br> Telefon: +49 1573 004 2105</p>
+        <p><strong>Vielen Dank für den Besuch meiner Website.<br>Wenn Sie Ihnen gefallen hat, würde ich mich über eine kurze Nachricht sehr freuen.</strong> 😊</p>
 
         <h3>Haftungsausschluss:</h3>
-        <p><strong>Haftung für Inhalte</strong><br>
-            Als Diensteanbieter bin ich gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den
-            allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG bin ich als Diensteanbieter jedoch nicht
-            verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen
-            zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen. Verpflichtungen zur Entfernung oder
-            Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben hiervon unberührt. Eine
-            diesbezügliche Haftung ist jedoch erst ab dem Zeitpunkt der Kenntnis einer konkreten
-            Rechtsverletzung möglich. Bei Bekanntwerden von entsprechenden Rechtsverletzungen werde ich diese
-            Inhalte umgehend entfernen.</p>
+        <p><strong>Haftung für Inhalte</strong><br> Als Diensteanbieter bin ich gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG bin ich als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen. Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben hiervon unberührt. Eine diesbezügliche Haftung ist jedoch erst ab dem Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung möglich. Bei Bekanntwerden von entsprechenden Rechtsverletzungen werde ich diese Inhalte umgehend entfernen.</p>
 
-        <p><strong>Haftung für Links</strong><br>
-            Mein Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte ich keinen Einfluss habe.
-            Deshalb kann ich für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der
-            verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Die
-            verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft.
-            Rechtswidrige Inhalte waren zum Zeitpunkt der Verlinkung nicht erkennbar. Eine permanente
-            inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte einer
-            Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von Rechtsverletzungen werde ich derartige Links
-            umgehend entfernen.</p>
+        <p><strong>Haftung für Links</strong><br> Mein Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte ich keinen Einfluss habe. Deshalb kann ich für diese fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft. Rechtswidrige Inhalte waren zum Zeitpunkt der Verlinkung nicht erkennbar. Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte einer Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von Rechtsverletzungen werde ich derartige Links umgehend entfernen.</p>
 
-        <p><strong>Urheberrecht</strong><br>
-            Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem
-            deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung
-            außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors
-            bzw. Erstellers. Downloads und Kopien dieser Seite sind nur für den privaten, nicht kommerziellen
-            Gebrauch gestattet. Soweit die Inhalte auf dieser Seite nicht vom Betreiber erstellt wurden, werden
-            die Urheberrechte Dritter beachtet. Insbesondere werden Inhalte Dritter als solche gekennzeichnet.
-            Sollten Sie trotzdem auf eine Urheberrechtsverletzung aufmerksam werden, bitte ich um einen
-            entsprechenden Hinweis. Bei Bekanntwerden von Rechtsverletzungen werde ich derartige Inhalte
-            umgehend entfernen.</p>
+        <p><strong>Urheberrecht</strong><br> Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers. Downloads und Kopien dieser Seite sind nur für den privaten, nicht kommerziellen Gebrauch gestattet. Soweit die Inhalte auf dieser Seite nicht vom Betreiber erstellt wurden, werden die Urheberrechte Dritter beachtet. Insbesondere werden Inhalte Dritter als solche gekennzeichnet. Sollten Sie trotzdem auf eine Urheberrechtsverletzung aufmerksam werden, bitte ich um einen entsprechenden Hinweis. Bei Bekanntwerden von Rechtsverletzungen werde ich derartige Inhalte umgehend entfernen.</p>
 
         <h3>Datenschutz:</h3>
-        <p>Die Nutzung meiner Webseite ist in der Regel ohne Angabe personenbezogener Daten möglich. Soweit auf
-            meinen Seiten personenbezogene Daten (beispielsweise Name, Anschrift oder E-Mail-Adressen) erhoben
-            werden, erfolgt dies, soweit möglich, stets auf freiwilliger Basis. Diese Daten werden ohne Ihre
-            ausdrückliche Zustimmung nicht an Dritte weitergegeben. Ich weise darauf hin, dass die
-            Datenübertragung im Internet (z.B. bei der Kommunikation per E-Mail) Sicherheitslücken aufweisen
-            kann. Ein lückenloser Schutz der Daten vor dem Zugriff durch Dritte ist nicht möglich.</p>
+        <p>Die Nutzung meiner Webseite ist in der Regel ohne Angabe personenbezogener Daten möglich. Soweit auf meinen Seiten personenbezogene Daten (beispielsweise Name, Anschrift oder E-Mail-Adressen) erhoben werden, erfolgt dies, soweit möglich, stets auf freiwilliger Basis. Diese Daten werden ohne Ihre ausdrückliche Zustimmung nicht an Dritte weitergegeben. Ich weise darauf hin, dass die Datenübertragung im Internet (z.B. bei der Kommunikation per E-Mail) Sicherheitslücken aufweisen kann. Ein lückenloser Schutz der Daten vor dem Zugriff durch Dritte ist nicht möglich.</p>
 
         <h3>Besucherzähler von besucherzaehler-kostenlos.de</h3>
 
@@ -468,7 +500,7 @@ Danke und Viel Spaß!
 
     <div id="logModal">
         <button class="closeButton" id="closeLogModal">X</button>
-        <h3>Live-Ereignisse</h3>
+        <h3>Ereignisse</h3>
         <table id="logTable">
             <thead>
                 <tr>
@@ -506,22 +538,22 @@ Danke und Viel Spaß!
                 showCookieBanner();
             } else if (cookieConsent === 'declined') {
                 document.body.innerHTML = '<h1>Der Zugriff auf diese Website wurde verweigert</h1><p>Sie haben die Verwendung von Cookies abgelehnt. Deshalb können Sie diese Website nicht nutzen.</p><button id="accessDeniedButton">Ok ... ok ... Ich akzeptiere ja die Verwendung von Cookies!</button>';
-                document.getElementById('accessDeniedButton').addEventListener('click', function() {
+                document.getElementById('accessDeniedButton').addEventListener('click', function () {
                     localStorage.setItem('cookieConsent', 'accepted');
                     location.reload();
                 });
             }
         }
 
-        document.getElementById('acceptCookies').addEventListener('click', function() {
+        document.getElementById('acceptCookies').addEventListener('click', function () {
             localStorage.setItem('cookieConsent', 'accepted');
             hideCookieBanner();
         });
 
-        document.getElementById('declineCookies').addEventListener('click', function() {
+        document.getElementById('declineCookies').addEventListener('click', function () {
             localStorage.setItem('cookieConsent', 'declined');
             document.body.innerHTML = '<h1>Der Zugriff auf diese Website wurde verweigert</h1><p>Sie haben die Verwendung von Cookies abgelehnt. Deshalb können Sie diese Website nicht nutzen.</p><button id="accessDeniedButton">Ok ... ok ... Ich akzeptiere ja die Verwendung von Cookies!</button>';
-            document.getElementById('accessDeniedButton').addEventListener('click', function() {
+            document.getElementById('accessDeniedButton').addEventListener('click', function () {
                 localStorage.setItem('cookieConsent', 'accepted');
                 location.reload();
             });
@@ -546,6 +578,7 @@ Danke und Viel Spaß!
         let elapsedTime = parseInt(localStorage.getItem('elapsedTime')) || 0;
         let lastBonusTime = parseInt(localStorage.getItem('lastBonusTime')) || 0;
         let fButtonVisible = false;
+        let lastMainNumber = mainNumber;
 
         const progressBarColors = [
             '#FF0000', '#00FF00', '#0000FF', '#FFFF00', '#FF00FF', '#00FFFF',
@@ -581,13 +614,16 @@ Danke und Viel Spaß!
         }
 
         function updateLogEntries(amount, isMainNumber) {
-            const timestamp = new Date().toLocaleString();
-            const formattedValue = amount === 0 ? 'Rückkehr' : isMainNumber ? `${amount},000` : `${amount}`;
-            logEntries.unshift({ value: formattedValue, time: timestamp });
-            if (logEntries.length > 15) {
-                logEntries.pop();
+            // Nur positive Erhöhungen aufzeichnen
+            if (amount > 0) {
+                const timestamp = new Date().toLocaleString();
+                const formattedValue = isMainNumber ? `+${amount},000` : `+${amount}`;
+                logEntries.unshift({ value: formattedValue, time: timestamp });
+                if (logEntries.length > 15) {
+                    logEntries.pop();
+                }
+                saveProgress();
             }
-            saveProgress();
         }
 
         function populateLogTable() {
@@ -633,39 +669,6 @@ Danke und Viel Spaß!
             }, 300);
         }
 
-        function showIncreaseValue(value, position, targetElement) {
-            const increaseValueElement = document.createElement('div');
-            increaseValueElement.className = 'increaseValue';
-            increaseValueElement.textContent = `+${value}`;
-
-            document.body.appendChild(increaseValueElement);
-
-            const targetRect = targetElement.getBoundingClientRect();
-            let startX, startY;
-
-            if (position === 'left') {
-                startX = targetRect.left - 40;
-                startY = targetRect.top + targetRect.height / 2;
-            } else if (position === 'right') {
-                startX = targetRect.right + 10;
-                startY = targetRect.top - 20;
-            }
-
-            increaseValueElement.style.left = `${startX}px`;
-            increaseValueElement.style.top = `${startY}px`;
-
-            setTimeout(() => {
-                increaseValueElement.style.opacity = '1';
-                increaseValueElement.style.transform = 'translateY(-20px)';
-                setTimeout(() => {
-                    increaseValueElement.style.opacity = '0';
-                    setTimeout(() => {
-                        increaseValueElement.remove();
-                    }, 500);
-                }, 500);
-            }, 0);
-        }
-
         function updateDisplay() {
             const subNumberFormatted = subNumber.toString().padStart(3, '0');
             document.getElementById('mainNumber').innerHTML = `${mainNumber}<span>,${subNumberFormatted}</span>`;
@@ -709,6 +712,7 @@ Danke und Viel Spaß!
 
             if (elapsedTime + timeSinceStart >= progressTime) {
                 increaseSubNumber(500);
+                updateLogEntries(500, false); // Hinzufügen des Logbucheintrags
                 progressStartTime = Date.now();
                 elapsedTime = 0;
                 updateDisplay();
@@ -723,34 +727,34 @@ Danke und Viel Spaß!
 
         function increaseSubNumber(amount) {
             subNumber += amount;
-            showIncreaseValue(amount, 'right', document.getElementById('mainNumber'));
             subNumber = Math.floor(subNumber);
 
             if (subNumber >= 1000) {
                 mainNumber += Math.floor(subNumber / 1000);
                 subNumber = subNumber % 1000;
                 applyIncreaseEffect();
+                updateLogEntries(Math.floor(subNumber / 1000), true);
+            } else {
+                updateLogEntries(amount, false);
             }
-            updateLogEntries(amount, false);
             checkForPrestige();
         }
 
         function increaseMainNumber(amount) {
             mainNumber += amount;
-            showIncreaseValue(amount, 'left', document.getElementById('mainNumber'));
             applyIncreaseEffect();
             updateLogEntries(amount, true);
             checkForPrestige();
         }
 
-        document.getElementById('clickButton').addEventListener('click', function() {
+        document.getElementById('clickButton').addEventListener('click', function () {
             clickCount++;
             increaseSubNumber(clickValue);
             updateDisplay();
             saveProgress();
         });
 
-        document.getElementById('upgradeButton').addEventListener('click', function() {
+        document.getElementById('upgradeButton').addEventListener('click', function () {
             if (mainNumber >= upgradeCost) {
                 mainNumber -= upgradeCost;
                 clickValue += 1;
@@ -760,38 +764,38 @@ Danke und Viel Spaß!
             }
         });
 
-        document.getElementById('prestigeButton').addEventListener('click', function() {
+        document.getElementById('prestigeButton').addEventListener('click', function () {
             checkForPrestige();
             updateDisplay();
         });
 
-        document.getElementById('progressBar').addEventListener('click', function() {
+        document.getElementById('progressBar').addEventListener('click', function () {
             currentColorIndex = (currentColorIndex + 1) % progressBarColors.length;
             progressBar.style.backgroundColor = progressBarColors[currentColorIndex];
         });
 
-        document.getElementById('prestigeProgressBar').addEventListener('click', function() {
+        document.getElementById('prestigeProgressBar').addEventListener('click', function () {
             currentColorIndex = (currentColorIndex + 1) % progressBarColors.length;
             prestigeProgressBar.style.backgroundColor = progressBarColors[currentColorIndex];
         });
 
-        document.getElementById('impressumButton').addEventListener('click', function() {
+        document.getElementById('impressumButton').addEventListener('click', function () {
             document.getElementById('overlay').style.display = 'block';
             document.getElementById('impressumModal').style.display = 'block';
         });
 
-        document.getElementById('closeImpressumModal').addEventListener('click', function() {
+        document.getElementById('closeImpressumModal').addEventListener('click', function () {
             document.getElementById('impressumModal').style.display = 'none';
             document.getElementById('overlay').style.display = 'none';
         });
 
-        document.getElementById('logButton').addEventListener('click', function() {
+        document.getElementById('logButton').addEventListener('click', function () {
             populateLogTable();
             document.getElementById('overlay').style.display = 'block';
             document.getElementById('logModal').style.display = 'block';
         });
 
-        document.getElementById('closeLogModal').addEventListener('click', function() {
+        document.getElementById('closeLogModal').addEventListener('click', function () {
             document.getElementById('logModal').style.display = 'none';
             document.getElementById('overlay').style.display = 'none';
         });
@@ -805,13 +809,14 @@ Danke und Viel Spaß!
             }
         }
 
-        document.addEventListener('visibilitychange', function() {
+        document.addEventListener('visibilitychange', function () {
             if (document.visibilityState === 'visible') {
                 calculateIdleProgress();
                 updateDisplay();
             } else {
                 keepRunning();
                 localStorage.setItem('lastSaveTime', Date.now());
+                lastMainNumber = mainNumber;
             }
         });
 
@@ -823,7 +828,13 @@ Danke und Viel Spaß!
             const cycles = Math.floor(timeElapsed / progressTime);
             const remainingTime = timeElapsed % progressTime;
 
-            increaseSubNumber(cycles * 500);
+            const increase = cycles * 500;
+            increaseSubNumber(increase);
+
+            const difference = mainNumber - lastMainNumber;
+            if (difference > 0) {
+                updateLogEntries(difference, true);
+            }
 
             progressStartTime = Date.now() - remainingTime;
 
@@ -831,12 +842,12 @@ Danke und Viel Spaß!
             saveProgress();
         }
 
-        document.getElementById('resetButton').addEventListener('click', function() {
+        document.getElementById('resetButton').addEventListener('click', function () {
             document.getElementById('overlay').style.display = 'block';
             document.getElementById('modal').style.display = 'block';
         });
 
-        document.getElementById('confirmReset').addEventListener('click', function() {
+        document.getElementById('confirmReset').addEventListener('click', function () {
             localStorage.clear();
             mainNumber = 0;
             subNumber = 0;
@@ -855,12 +866,12 @@ Danke und Viel Spaß!
             document.getElementById('overlay').style.display = 'none';
         });
 
-        document.getElementById('cancelReset').addEventListener('click', function() {
+        document.getElementById('cancelReset').addEventListener('click', function () {
             document.getElementById('modal').style.display = 'none';
             document.getElementById('overlay').style.display = 'none';
         });
 
-        document.getElementById('closeAchievementModal').addEventListener('click', function() {
+        document.getElementById('closeAchievementModal').addEventListener('click', function () {
             document.getElementById('achievementModal').style.display = 'none';
             document.getElementById('overlay').style.display = 'none';
         });
@@ -887,17 +898,14 @@ Danke und Viel Spaß!
             }
         }
 
-        bonusButton.addEventListener('click', function() {
+        bonusButton.addEventListener('click', function () {
             if (Date.now() - lastBonusTime >= bonusInterval) {
-                const mainNumberElement = document.getElementById('mainNumber');
-                const commaElement = mainNumberElement.querySelector('span');
+                const commaElement = document.querySelector('#mainNumber span');
                 const commaRect = commaElement.getBoundingClientRect();
-
                 const bonusButtonRect = bonusButton.getBoundingClientRect();
                 const deltaX = commaRect.left - bonusButtonRect.left;
                 const deltaY = commaRect.top - bonusButtonRect.top;
 
-                bonusButton.style.transition = 'transform 0.5s ease-out, opacity 0.5s ease-out';
                 bonusButton.style.transform = `translate(${deltaX}px, ${deltaY}px) scale(0.5)`;
 
                 setTimeout(() => {
@@ -910,6 +918,7 @@ Danke und Viel Spaß!
                     setTimeout(() => {
                         bonusButton.style.display = 'none';
                         bonusButton.style.opacity = '1';
+                        bonusButton.style.transform = 'none';
                         bonusButton.classList.remove('show');
                     }, 500);
                 }, 500);
@@ -944,18 +953,15 @@ Danke und Viel Spaß!
                 }, 500);
             }, 10000);
 
-            fButton.addEventListener('click', function() {
+            fButton.addEventListener('click', function () {
                 clearTimeout(removeFButtonTimeout);
 
-                const mainNumberElement = document.getElementById('mainNumber');
-                const commaElement = mainNumberElement.querySelector('span');
+                const commaElement = document.querySelector('#mainNumber span');
                 const commaRect = commaElement.getBoundingClientRect();
-
                 const fButtonRect = fButton.getBoundingClientRect();
                 const deltaX = commaRect.left - fButtonRect.left;
                 const deltaY = commaRect.top - fButtonRect.top;
 
-                fButton.style.transition = 'transform 0.5s ease-out, opacity 0.5s ease-out';
                 fButton.style.transform = `translate(${deltaX}px, ${deltaY}px) scale(0.5)`;
 
                 setTimeout(() => {
@@ -988,4 +994,5 @@ Danke und Viel Spaß!
         setInterval(updateTabTitle, 5000);
     </script>
 </body>
+
 </html>
